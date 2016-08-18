@@ -1,0 +1,19 @@
+{
+  "name": "backstage-dropdown",
+  "version": "0.1.0",
+  "description": "backstage dropdown",
+  "main": "dist/dropdown.js",
+  "scripts": {
+    "test": "jest test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/backstage-ui/backstage-dropdown.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/backstage-ui/backstage-dropdown/issues"
+  },
+  "homepage": "https://github.com/backstage-ui/backstage-dropdown#readme"
+}
