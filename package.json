@@ -15,5 +15,11 @@
   "bugs": {
     "url": "https://github.com/backstage-ui/backstage-dropdown/issues"
   },
-  "homepage": "https://github.com/backstage-ui/backstage-dropdown#readme"
+  "homepage": "https://github.com/backstage-ui/backstage-dropdown#readme",
+  "devDependencies": {
+    "jest": "^14.1.0"
+  },
+  "jest": {
+    "automock": false
+  }
 }
