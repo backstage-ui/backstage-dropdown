@@ -4,7 +4,11 @@ export default class Dropdown extends Component {
   render() {
     return (
       <div className={this.props.className}>
-        <p>component</p>
+        <div className="dropdown-control">
+          <div className="dropdown-placeholder">value</div>
+          <span className="dropdown-arrow" />
+        </div>
+        <div className="dropdown-items" />
       </div>
     );
   }
