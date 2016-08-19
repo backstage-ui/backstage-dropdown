@@ -15,4 +15,11 @@ describe('<Dropdown />', () => {
 
     expect(label.text()).toBe('my label');
   });
+
+  it('should accept placeholder', () => {
+    const wrapper = shallow(<Dropdown placeholder="my placeholder" />);
+    const placeholder = wrapper.find('.dropdown-placeholder');
+
+    expect(placeholder.text()).toBe('my placeholder');
+  });
 });

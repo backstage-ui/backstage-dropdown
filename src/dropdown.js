@@ -8,10 +8,9 @@ export default class Dropdown extends Component {
           {this.props.label}
         </label>
         <div>
-          <div>value</div>
+          <div className="dropdown-placeholder">{this.props.placeholder}</div>
           <span className="dropdown-arrow" />
         </div>
-        <div />
       </div>
     );
   }
@@ -20,8 +19,10 @@ export default class Dropdown extends Component {
 Dropdown.propTypes = {
   className: React.PropTypes.string,
   label: React.PropTypes.string,
+  placeholder: React.PropTypes.string,
 };
 
 Dropdown.defaultProps = {
   label: '',
+  placeholder: '',
 };
