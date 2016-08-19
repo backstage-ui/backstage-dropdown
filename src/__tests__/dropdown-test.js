@@ -8,4 +8,11 @@ describe('<Dropdown />', () => {
     const wrapper = shallow(<Dropdown className="foobar" />);
     expect(wrapper.hasClass('foobar')).toBe(true);
   });
+
+  it('should accept label', () => {
+    const wrapper = shallow(<Dropdown label="my label" />);
+    const label = wrapper.find('label');
+
+    expect(label.text()).toBe('my label');
+  });
 });
