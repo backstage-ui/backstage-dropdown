@@ -36,4 +36,11 @@ describe('<Dropdown />', () => {
 
     expect(input.prop('value')).toBe('my value');
   });
+
+  it('should accept custom name', () => {
+    const wrapper = shallow(<Dropdown name="my-dropdown" />);
+    const input = wrapper.find('input');
+
+    expect(input.prop('name')).toBe('my-dropdown');
+  });
 });

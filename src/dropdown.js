@@ -12,7 +12,7 @@ export default class Dropdown extends Component {
       <div className={this.props.className}>
         <input
           type="hidden"
-          name="backstage-dropdown"
+          name={this.props.name}
           id="backstage-dropdown"
           value={this.state.value}
         />
@@ -33,10 +33,12 @@ Dropdown.propTypes = {
   label: React.PropTypes.string,
   placeholder: React.PropTypes.string,
   value: React.PropTypes.string,
+  name: React.PropTypes.string,
 };
 
 Dropdown.defaultProps = {
   label: '',
   placeholder: '',
   value: '',
+  name: '',
 };
