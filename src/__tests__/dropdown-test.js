@@ -43,4 +43,11 @@ describe('<Dropdown />', () => {
 
     expect(input.prop('name')).toBe('my-dropdown');
   });
+
+  it('should have options', () => {
+    const wrapper = shallow(<Dropdown options={[1, 2, 3]} />);
+    const options = wrapper.find('.dropdown-item');
+
+    expect(options.length).toBe(3);
+  });
 });
