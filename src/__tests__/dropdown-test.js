@@ -22,4 +22,11 @@ describe('<Dropdown />', () => {
 
     expect(placeholder.text()).toBe('my placeholder');
   });
+
+  it('should has an arrow', () => {
+    const wrapper = shallow(<Dropdown placeholder="my placeholder" />);
+    const arrow = wrapper.find('.dropdown-arrow');
+
+    expect(arrow.length).toBe(1);
+  });
 });
