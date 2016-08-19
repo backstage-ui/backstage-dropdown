@@ -29,4 +29,11 @@ describe('<Dropdown />', () => {
 
     expect(arrow.length).toBe(1);
   });
+
+  it('should accept initial value', () => {
+    const wrapper = shallow(<Dropdown value="my value" />);
+    const input = wrapper.find('input');
+
+    expect(input.prop('value')).toBe('my value');
+  });
 });

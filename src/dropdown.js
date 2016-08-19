@@ -1,9 +1,21 @@
 import React, { Component } from 'react';
 
 export default class Dropdown extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = { value: props.value };
+  }
+
   render() {
     return (
       <div className={this.props.className}>
+        <input
+          type="hidden"
+          name="backstage-dropdown"
+          id="backstage-dropdown"
+          value={this.state.value}
+        />
         <label htmlFor="backstage-dropdown">
           {this.props.label}
         </label>
@@ -20,9 +32,11 @@ Dropdown.propTypes = {
   className: React.PropTypes.string,
   label: React.PropTypes.string,
   placeholder: React.PropTypes.string,
+  value: React.PropTypes.string,
 };
 
 Dropdown.defaultProps = {
   label: '',
   placeholder: '',
+  value: '',
 };
