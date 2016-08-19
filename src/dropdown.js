@@ -1,25 +1,5 @@
 import React, { Component } from 'react';
-
-class Option extends Component {
-  render() {
-    return (
-      <div
-        value={this.props.value}
-        className="dropdown-item"
-      >
-        {this.props.value}
-      </div>
-    );
-  }
-}
-
-Option.propTypes = {
-  value: React.PropTypes.string,
-};
-
-Option.defaultProps = {
-  value: '',
-};
+import Option from './option';
 
 export default class Dropdown extends Component {
   constructor(props) {
