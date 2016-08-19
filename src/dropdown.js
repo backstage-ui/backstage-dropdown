@@ -1,5 +1,26 @@
 import React, { Component } from 'react';
 
+class Option extends Component {
+  render() {
+    return (
+      <div
+        value={this.props.value}
+        className="dropdown-item"
+      >
+        {this.props.value}
+      </div>
+    );
+  }
+}
+
+Option.propTypes = {
+  value: React.PropTypes.string,
+};
+
+Option.defaultProps = {
+  value: '',
+};
+
 export default class Dropdown extends Component {
   constructor(props) {
     super(props);
@@ -9,7 +30,8 @@ export default class Dropdown extends Component {
 
   renderOptions() {
     let options = this.props.options.map((option) => {
-      const opt = <div key={option} value={option} className="dropdown-item">{option}</div>;
+      const opt = <Option key={option} value={option} />;
+      // const opt = <div key={option} value={option} className="dropdown-item">{option}</div>;
       return opt;
     });
     let optionsContainer;

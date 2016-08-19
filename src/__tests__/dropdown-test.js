@@ -1,6 +1,6 @@
 /* global describe, it, expect */
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import Dropdown from '../dropdown';
 
 describe('<Dropdown />', () => {
@@ -45,7 +45,7 @@ describe('<Dropdown />', () => {
   });
 
   it('should have options', () => {
-    const wrapper = shallow(<Dropdown options={[1, 2, 3]} />);
+    const wrapper = mount(<Dropdown options={['1', '2', '3']} />);
     const options = wrapper.find('.dropdown-item');
 
     expect(options.length).toBe(3);
