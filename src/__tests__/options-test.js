@@ -1,11 +1,11 @@
 /* global describe, it, expect */
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { shallow } from 'enzyme';
 import Option from '../option';
 
 describe('<Option />', () => {
   it('should has hover state', () => {
-    const option = mount(<Option />);
+    const option = shallow(<Option />);
 
     expect(option.state('hover')).toBe(false);
   });
