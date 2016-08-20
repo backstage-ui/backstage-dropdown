@@ -21,7 +21,7 @@ export default class Option extends Component {
     return (
       <div
         value={this.props.value}
-        className="dropdown-item"
+        className="dropdown-option"
       >
         {this.props.value}
       </div>

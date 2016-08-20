@@ -46,7 +46,7 @@ describe('<Dropdown />', () => {
 
   it('should have options', () => {
     const wrapper = mount(<Dropdown options={['1', '2', '3']} />);
-    const options = wrapper.find('.dropdown-item');
+    const options = wrapper.find('.dropdown-option');
 
     expect(options.length).toBe(3);
   });
