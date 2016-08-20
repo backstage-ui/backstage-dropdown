@@ -2,6 +2,7 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import Dropdown from '../dropdown';
+import Option from '../option';
 
 describe('<Dropdown />', () => {
   it('should accept className', () => {
@@ -46,7 +47,7 @@ describe('<Dropdown />', () => {
 
   it('should have options', () => {
     const wrapper = mount(<Dropdown options={['1', '2', '3']} />);
-    const options = wrapper.find('.dropdown-option');
+    const options = wrapper.find(Option);
 
     expect(options.length).toBe(3);
   });
