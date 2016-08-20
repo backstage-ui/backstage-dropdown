@@ -18,4 +18,9 @@ describe('<Option />', () => {
     const wrapper = shallow(<Option value="my value" />);
     expect(wrapper.prop('value')).toBe('my value');
   });
+
+  it('should use value as text', () => {
+    const wrapper = shallow(<Option value="my value" />);
+    expect(wrapper.text()).toBe('my value');
+  });
 });
