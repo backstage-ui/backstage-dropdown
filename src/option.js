@@ -13,6 +13,7 @@ export default class Option extends Component {
 
   onClick() {
     this.setState({ selected: true });
+    this.props.onChange(this.props.value);
   }
 
   mouseOver() {
@@ -47,8 +48,10 @@ export default class Option extends Component {
 
 Option.propTypes = {
   value: React.PropTypes.string,
+  onChange: React.PropTypes.func,
 };
 
 Option.defaultProps = {
   value: '',
+  onChange: () => {},
 };

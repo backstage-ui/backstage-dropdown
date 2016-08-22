@@ -31,4 +31,12 @@ describe('<Option />', () => {
     wrapper.simulate('click');
     expect(wrapper.state('selected')).toBe(true);
   });
+
+  it('should support onChange', () => {
+    let result;
+    const wrapper = mount(<Option value="my value" onChange={(value) => { result = value; }} />);
+    wrapper.simulate('click');
+
+    expect(result).toBe('my value');
+  });
 });
