@@ -5,7 +5,13 @@ export default class Dropdown extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { value: props.value };
+    this.state = { value: props.value, dropdown: false };
+    this.onClick = this.onClick.bind(this);
+  }
+
+  onClick() {
+    const dropdown = this.state.dropdown;
+    this.setState({ dropdown: !dropdown });
   }
 
   renderOptions() {
@@ -22,7 +28,7 @@ export default class Dropdown extends Component {
 
   render() {
     return (
-      <div className={this.props.className}>
+      <div className={this.props.className} onClick={this.onClick}>
         <input
           type="hidden"
           name={this.props.name}
@@ -35,8 +41,8 @@ export default class Dropdown extends Component {
         <div>
           <div className="dropdown-placeholder">{this.props.placeholder}</div>
           <span className="dropdown-arrow" />
+          {this.state.dropdown ? this.renderOptions() : <div />}
         </div>
-        {this.renderOptions()}
       </div>
     );
   }

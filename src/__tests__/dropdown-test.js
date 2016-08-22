@@ -45,10 +45,30 @@ describe('<Dropdown />', () => {
     expect(input.prop('name')).toBe('my-dropdown');
   });
 
+  it('should enable/disable drodpwn', () => {
+    const wrapper = mount(<Dropdown />);
+
+    expect(wrapper.state('dropdown')).toBe(false);
+
+    wrapper.simulate('click');
+    expect(wrapper.state('dropdown')).toBe(true);
+
+    wrapper.simulate('click');
+    expect(wrapper.state('dropdown')).toBe(false);
+  });
+
   it('should have options', () => {
     const wrapper = mount(<Dropdown options={['1', '2', '3']} />);
-    const options = wrapper.find(Option);
 
+    let options = wrapper.find(Option);
+    expect(options.length).toBe(0);
+
+    wrapper.simulate('click');
+    options = wrapper.find(Option);
     expect(options.length).toBe(3);
+
+    wrapper.simulate('click');
+    options = wrapper.find(Option);
+    expect(options.length).toBe(0);
   });
 });
