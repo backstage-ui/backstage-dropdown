@@ -51,12 +51,19 @@ export default class Dropdown extends Component {
   render() {
     let dropdownStyle = styles.dropdown;
     let arrowStyle = styles.arrow;
+    let placeholderStyle = styles.placeholder;
 
     if (this.state.hover) {
       dropdownStyle = Object.assign({}, dropdownStyle, styles.dropdownHover);
       arrowStyle = Object.assign({}, arrowStyle, styles.arrowHover);
     }
 
+    const selected = (this.props.value !== this.state.value);
+
+    if (selected && !this.state.hover) {
+      arrowStyle = Object.assign({}, arrowStyle, styles.arrowSelected);
+      placeholderStyle = Object.assign({}, placeholderStyle, styles.placeholderSelected);
+    }
     return (
       <div
         className={this.props.className}
@@ -72,7 +79,7 @@ export default class Dropdown extends Component {
           value={this.state.value}
         />
         <div style={dropdownStyle}>
-          <div className="dropdown-placeholder" style={styles.placeholder}>
+          <div className="dropdown-placeholder" style={placeholderStyle}>
             {this.state.value.length > 0 ? this.state.value : this.props.placeholder}
           </div>
           <span className="dropdown-arrow" style={arrowStyle} />

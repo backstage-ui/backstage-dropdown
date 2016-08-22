@@ -11,6 +11,9 @@ export default {
     color: '#999',
     padding: '6px 0 0 16px',
   },
+  placeholderSelected: {
+    color: '#333',
+  },
   dropdown: {
     width: '255px',
     height: '32px',
@@ -38,10 +41,14 @@ export default {
     backgroundColor: '#fff',
     height: '36px',
     padding: '10px 0 10px 16px',
+    color: '#999',
   },
   optionHover: {
     backgroundColor: '#0769de',
     color: '#fff',
+  },
+  optionSelected: {
+    color: '#333',
   },
   arrow: {
     borderColor: '#ccc transparent transparent',
@@ -57,5 +64,8 @@ export default {
   },
   arrowHover: {
     borderColor: '#999 transparent transparent',
+  },
+  arrowSelected: {
+    borderColor: '#333 transparent transparent',
   },
 };

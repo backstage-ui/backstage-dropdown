@@ -30,6 +30,10 @@ export default class Option extends Component {
       optionStyle = Object.assign({}, optionStyle, styles.optionHover);
     }
 
+    if (this.props.selected && !this.state.hover) {
+      optionStyle = Object.assign({}, optionStyle, styles.optionSelected);
+    }
+
     return (
       <div
         value={this.props.value}
