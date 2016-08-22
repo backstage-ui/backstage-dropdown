@@ -2,6 +2,7 @@ export default {
   container: {
     display: 'inline-block',
     height: '32px',
+    cursor: 'default',
   },
   placeholder: {
     height: '16px',
