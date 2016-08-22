@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Option from './option';
+import styles from './dropdown.css';
 
 export default class Dropdown extends Component {
   constructor(props) {
@@ -21,28 +22,27 @@ export default class Dropdown extends Component {
     });
     let optionsContainer;
     if (options.length > 0) {
-      optionsContainer = <div className="dropdown-options">{options}</div>;
+      optionsContainer = <div className="dropdown-options" style={styles.options}>{options}</div>;
     }
     return optionsContainer;
   }
 
   render() {
     return (
-      <div className={this.props.className} onClick={this.onClick}>
+      <div className={this.props.className} onClick={this.onClick} style={styles.container}>
         <input
           type="hidden"
           name={this.props.name}
           id="backstage-dropdown"
           value={this.state.value}
         />
-        <label htmlFor="backstage-dropdown">
-          {this.props.label}
-        </label>
-        <div>
-          <div className="dropdown-placeholder">{this.props.placeholder}</div>
-          <span className="dropdown-arrow" />
-          {this.state.dropdown ? this.renderOptions() : <div />}
+        <div style={styles.dropdown}>
+          <div className="dropdown-placeholder" style={styles.placeholder}>
+            {this.props.placeholder}
+          </div>
+          <span className="dropdown-arrow" style={styles.arrow} />
         </div>
+        {this.state.dropdown ? this.renderOptions() : <div />}
       </div>
     );
   }

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import styles from './dropdown.css';
 
 export default class Option extends Component {
   constructor(props) {
@@ -23,11 +24,20 @@ export default class Option extends Component {
   }
 
   render() {
+    let optionStyle = styles.option;
+
+    if (this.state.hover) {
+      optionStyle = Object.assign({}, optionStyle, styles.optionHover);
+    }
+
     return (
       <div
         value={this.props.value}
         className="dropdown-option"
         onClick={this.onClick}
+        onMouseOver={this.mouseOver}
+        onMouseOut={this.mouseOut}
+        style={optionStyle}
       >
         {this.props.value}
       </div>

@@ -10,13 +10,6 @@ describe('<Dropdown />', () => {
     expect(wrapper.hasClass('foobar')).toBe(true);
   });
 
-  it('should accept label', () => {
-    const wrapper = shallow(<Dropdown label="my label" />);
-    const label = wrapper.find('label');
-
-    expect(label.text()).toBe('my label');
-  });
-
   it('should accept placeholder', () => {
     const wrapper = shallow(<Dropdown placeholder="my placeholder" />);
     const placeholder = wrapper.find('.dropdown-placeholder');
