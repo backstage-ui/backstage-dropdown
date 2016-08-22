@@ -6,8 +6,9 @@ export default class Dropdown extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { value: props.value, dropdown: false };
+    this.state = { selected: '', value: props.value, dropdown: false };
     this.onClick = this.onClick.bind(this);
+    this.optionChange = this.optionChange.bind(this);
   }
 
   onClick() {
@@ -15,9 +16,13 @@ export default class Dropdown extends Component {
     this.setState({ dropdown: !dropdown });
   }
 
+  optionChange(selected) {
+    this.setState({ selected });
+  }
+
   renderOptions() {
     let options = this.props.options.map((option) => {
-      const opt = <Option key={option} value={option} />;
+      const opt = <Option key={option} value={option} onChange={this.optionChange} />;
       return opt;
     });
     let optionsContainer;
@@ -38,7 +43,7 @@ export default class Dropdown extends Component {
         />
         <div style={styles.dropdown}>
           <div className="dropdown-placeholder" style={styles.placeholder}>
-            {this.props.placeholder}
+            {this.state.selected.length > 0 ? this.state.selected : this.props.placeholder}
           </div>
           <span className="dropdown-arrow" style={styles.arrow} />
         </div>
