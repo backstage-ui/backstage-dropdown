@@ -1,6 +1,6 @@
 /* global describe, it, expect */
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import Option from '../option';
 
 describe('<Option />', () => {
@@ -22,5 +22,13 @@ describe('<Option />', () => {
   it('should use value as text', () => {
     const wrapper = shallow(<Option value="my value" />);
     expect(wrapper.text()).toBe('my value');
+  });
+
+  it('should support click', () => {
+    const wrapper = mount(<Option />);
+    expect(wrapper.state('selected')).toBe(false);
+
+    wrapper.simulate('click');
+    expect(wrapper.state('selected')).toBe(true);
   });
 });
