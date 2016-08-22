@@ -6,7 +6,7 @@ export default class Dropdown extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { selected: '', value: props.value, dropdown: false };
+    this.state = { value: props.value, dropdown: false };
     this.onClick = this.onClick.bind(this);
     this.optionChange = this.optionChange.bind(this);
   }
@@ -16,8 +16,8 @@ export default class Dropdown extends Component {
     this.setState({ dropdown: !dropdown });
   }
 
-  optionChange(selected) {
-    this.setState({ selected });
+  optionChange(value) {
+    this.setState({ value });
   }
 
   renderOptions() {
@@ -43,7 +43,7 @@ export default class Dropdown extends Component {
         />
         <div style={styles.dropdown}>
           <div className="dropdown-placeholder" style={styles.placeholder}>
-            {this.state.selected.length > 0 ? this.state.selected : this.props.placeholder}
+            {this.state.value.length > 0 ? this.state.value : this.props.placeholder}
           </div>
           <span className="dropdown-arrow" style={styles.arrow} />
         </div>

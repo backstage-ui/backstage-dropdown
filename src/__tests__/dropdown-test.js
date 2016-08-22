@@ -75,4 +75,15 @@ describe('<Dropdown />', () => {
     const placeholder = wrapper.find('.dropdown-placeholder');
     expect(placeholder.text()).toBe('1');
   });
+
+  it('should change value on selection', () => {
+    const wrapper = mount(<Dropdown options={['1', '2', '3']} />);
+    wrapper.simulate('click');
+
+    const option = wrapper.find(Option).first();
+    option.simulate('click');
+
+    const input = wrapper.find('input');
+    expect(input.prop('value')).toBe('1');
+  });
 });
