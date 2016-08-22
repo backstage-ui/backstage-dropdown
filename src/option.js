@@ -5,14 +5,13 @@ export default class Option extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { hover: false, selected: false };
+    this.state = { hover: false };
     this.mouseOver = this.mouseOver.bind(this);
     this.mouseOut = this.mouseOut.bind(this);
     this.onClick = this.onClick.bind(this);
   }
 
   onClick() {
-    this.setState({ selected: true });
     this.props.onChange(this.props.value);
   }
 
@@ -49,9 +48,11 @@ export default class Option extends Component {
 Option.propTypes = {
   value: React.PropTypes.string,
   onChange: React.PropTypes.func,
+  selected: React.PropTypes.bool,
 };
 
 Option.defaultProps = {
   value: '',
   onChange: () => {},
+  selected: false,
 };
