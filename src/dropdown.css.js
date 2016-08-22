@@ -19,6 +19,9 @@ export default {
     border: 'solid 2px #ccc',
     position: 'relative',
   },
+  dropdownHover: {
+    border: 'solid 2px #999',
+  },
   options: {
     width: '255px',
     borderRadius: '2px',
@@ -41,7 +44,7 @@ export default {
     color: '#fff',
   },
   arrow: {
-    borderColor: '#999 transparent transparent',
+    borderColor: '#ccc transparent transparent',
     borderStyle: 'solid',
     borderWidth: '5px 5px 0',
     content: 'x',
@@ -51,5 +54,8 @@ export default {
     right: '13px',
     top: '12px',
     width: 0,
+  },
+  arrowHover: {
+    borderColor: '#999 transparent transparent',
   },
 };
