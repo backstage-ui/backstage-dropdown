@@ -86,4 +86,18 @@ describe('<Dropdown />', () => {
     const input = wrapper.find('input');
     expect(input.prop('value')).toBe('1');
   });
+
+  it('should support selection', () => {
+    const wrapper = mount(<Dropdown options={['1', '2', '3']} />);
+    wrapper.simulate('click');
+
+    let option = wrapper.find(Option).first();
+    expect(option.prop('selected')).toBe(false);
+
+    option.simulate('click');
+
+    wrapper.simulate('click');
+    option = wrapper.find(Option).first();
+    expect(option.prop('selected')).toBe(true);
+  });
 });

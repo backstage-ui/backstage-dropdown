@@ -22,7 +22,13 @@ export default class Dropdown extends Component {
 
   renderOptions() {
     let options = this.props.options.map((option) => {
-      const opt = <Option key={option} value={option} onChange={this.optionChange} />;
+      const selected = (option === this.state.value);
+      const opt = (<Option
+        key={option}
+        selected={selected}
+        value={option}
+        onChange={this.optionChange}
+      />);
       return opt;
     });
     let optionsContainer;
