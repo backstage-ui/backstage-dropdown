@@ -71,6 +71,7 @@ export default class Dropdown extends Component {
     let dropdownStyle = styles.dropdown;
     let arrowStyle = styles.arrow;
     let placeholderStyle = styles.placeholder;
+    const containerStyle = Object.assign({}, styles.container, this.props.style);
 
     if (this.state.hover) {
       dropdownStyle = Object.assign({}, dropdownStyle, styles.dropdownHover);
@@ -87,7 +88,7 @@ export default class Dropdown extends Component {
       <div
         className={this.props.className}
         onClick={this.onClick}
-        style={styles.container}
+        style={containerStyle}
         onMouseOver={this.mouseOver}
         onMouseOut={this.mouseOut}
       >
@@ -117,6 +118,7 @@ Dropdown.propTypes = {
   name: React.PropTypes.string,
   options: React.PropTypes.array,
   onChange: React.PropTypes.func,
+  style: React.PropTypes.object,
 };
 
 Dropdown.defaultProps = {
@@ -126,4 +128,5 @@ Dropdown.defaultProps = {
   name: '',
   options: [],
   onChange: () => {},
+  style: {},
 };
