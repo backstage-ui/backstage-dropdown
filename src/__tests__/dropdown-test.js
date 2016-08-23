@@ -100,4 +100,12 @@ describe('<Dropdown />', () => {
     option = wrapper.find(Option).first();
     expect(option.prop('selected')).toBe(true);
   });
+
+  it('should support onChange', () => {
+    let result;
+    const wrapper = mount(<Dropdown onChange={() => { result = 'changed'; }} />);
+    wrapper.simulate('click');
+
+    expect(result).toBe('changed');
+  });
 });

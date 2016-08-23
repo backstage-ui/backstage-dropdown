@@ -28,6 +28,7 @@ export default class Dropdown extends Component {
   onClick() {
     const dropdown = this.state.dropdown;
     this.setState({ dropdown: !dropdown, hover: false });
+    this.props.onChange();
   }
 
   mouseOver() {
@@ -115,6 +116,7 @@ Dropdown.propTypes = {
   value: React.PropTypes.string,
   name: React.PropTypes.string,
   options: React.PropTypes.array,
+  onChange: React.PropTypes.func,
 };
 
 Dropdown.defaultProps = {
@@ -123,4 +125,5 @@ Dropdown.defaultProps = {
   value: '',
   name: '',
   options: [],
+  onChange: () => {},
 };
