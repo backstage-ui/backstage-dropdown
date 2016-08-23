@@ -64,6 +64,7 @@ var Dropdown = function (_Component) {
     value: function onClick() {
       var dropdown = this.state.dropdown;
       this.setState({ dropdown: !dropdown, hover: false });
+      this.props.onChange();
     }
   }, {
     key: 'mouseOver',
@@ -118,6 +119,7 @@ var Dropdown = function (_Component) {
       var dropdownStyle = _dropdown2.default.dropdown;
       var arrowStyle = _dropdown2.default.arrow;
       var placeholderStyle = _dropdown2.default.placeholder;
+      var containerStyle = Object.assign({}, _dropdown2.default.container, this.props.style);
 
       if (this.state.hover) {
         dropdownStyle = Object.assign({}, dropdownStyle, _dropdown2.default.dropdownHover);
@@ -135,7 +137,7 @@ var Dropdown = function (_Component) {
         {
           className: this.props.className,
           onClick: this.onClick,
-          style: _dropdown2.default.container,
+          style: containerStyle,
           onMouseOver: this.mouseOver,
           onMouseOut: this.mouseOut
         },
@@ -172,7 +174,9 @@ Dropdown.propTypes = {
   placeholder: _react2.default.PropTypes.string,
   value: _react2.default.PropTypes.string,
   name: _react2.default.PropTypes.string,
-  options: _react2.default.PropTypes.array
+  options: _react2.default.PropTypes.array,
+  onChange: _react2.default.PropTypes.func,
+  style: _react2.default.PropTypes.object
 };
 
 Dropdown.defaultProps = {
@@ -180,5 +184,7 @@ Dropdown.defaultProps = {
   placeholder: '',
   value: '',
   name: '',
-  options: []
+  options: [],
+  onChange: function onChange() {},
+  style: {}
 };
