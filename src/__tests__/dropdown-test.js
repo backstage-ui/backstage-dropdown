@@ -103,8 +103,11 @@ describe('<Dropdown />', () => {
 
   it('should support onChange', () => {
     let result;
-    const wrapper = mount(<Dropdown onChange={() => { result = 'changed'; }} />);
+    const wrapper = mount(<Dropdown options={['1']} onChange={() => { result = 'changed'; }} />);
     wrapper.simulate('click');
+
+    const option = wrapper.find(Option).first();
+    option.simulate('click');
 
     expect(result).toBe('changed');
   });

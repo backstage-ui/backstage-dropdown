@@ -28,7 +28,6 @@ export default class Dropdown extends Component {
   onClick() {
     const dropdown = this.state.dropdown;
     this.setState({ dropdown: !dropdown, hover: false });
-    this.props.onChange();
   }
 
   mouseOver() {
@@ -41,6 +40,7 @@ export default class Dropdown extends Component {
 
   optionChange(value) {
     this.setState({ value });
+    this.props.onChange();
   }
 
   handleDocumentClick() {
