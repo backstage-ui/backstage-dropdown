@@ -64,7 +64,6 @@ var Dropdown = function (_Component) {
     value: function onClick() {
       var dropdown = this.state.dropdown;
       this.setState({ dropdown: !dropdown, hover: false });
-      this.props.onChange();
     }
   }, {
     key: 'mouseOver',
@@ -80,6 +79,7 @@ var Dropdown = function (_Component) {
     key: 'optionChange',
     value: function optionChange(value) {
       this.setState({ value: value });
+      this.props.onChange();
     }
   }, {
     key: 'handleDocumentClick',
