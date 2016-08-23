@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import Option from './option';
 import styles from './dropdown.css';
 
@@ -11,6 +12,17 @@ export default class Dropdown extends Component {
     this.optionChange = this.optionChange.bind(this);
     this.mouseOver = this.mouseOver.bind(this);
     this.mouseOut = this.mouseOut.bind(this);
+    this.handleDocumentClick = this.handleDocumentClick.bind(this);
+  }
+
+  componentDidMount() {
+    document.addEventListener('click', this.handleDocumentClick, false);
+    document.addEventListener('touchend', this.handleDocumentClick, false);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('click', this.handleDocumentClick, false);
+    document.removeEventListener('touchend', this.handleDocumentClick, false);
   }
 
   onClick() {
@@ -28,6 +40,12 @@ export default class Dropdown extends Component {
 
   optionChange(value) {
     this.setState({ value });
+  }
+
+  handleDocumentClick() {
+    if (!ReactDOM.findDOMNode(this).contains(event.target)) {
+      this.setState({ dropdown: false });
+    }
   }
 
   renderOptions() {
