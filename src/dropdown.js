@@ -50,7 +50,7 @@ export default class Dropdown extends Component {
   }
 
   renderOptions() {
-    let options = this.props.options.map((option) => {
+    const options = this.props.options.map((option) => {
       const selected = (option === this.state.value);
       const opt = (<Option
         key={option}
