@@ -1,5 +1,12 @@
+/*
+ * Copyright (c) 2016, Globo.com (https://github.com/globocom)
+ *
+ * License: MIT
+ */
+
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+
 import Option from './option';
 import styles from './dropdown.css';
 
