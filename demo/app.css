@@ -38,3 +38,15 @@ code {
   background-color: #ccc;
   margin: 0;
 }
+
+.modes {
+  margin-bottom: 20px;
+}
+
+.modes input {
+  margin-left: 20px;
+}
+
+.dropdown {
+  width: 400px;
+}

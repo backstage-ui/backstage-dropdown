@@ -50,6 +50,7 @@
     "automock": false
   },
   "dependencies": {
+    "classnames": "^2.2.5",
     "react-portal": "^3.0.0"
   }
 }

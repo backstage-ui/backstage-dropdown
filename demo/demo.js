@@ -12,30 +12,62 @@ import Dropdown from '../src/dropdown';
 class Demo extends React.Component {
   constructor(){
     super();
+
     this.state = {
-      isOpen: true
+      isSmall: false,
+      isDisabled: false,
+      isOpenUp: false,
+      selectedOption: {}
     };
 
-    this.onOpenClick = ::this.onOpenClick;
-    this.onCloseRequest = ::this.onCloseRequest;
+    this.onSmallCheck = ::this.onSmallCheck;
+    this.onDisableCheck = ::this.onDisableCheck;
+    this.onOpenUpCheck = ::this.onOpenUpCheck;
+    this.onSelectOption = ::this.onSelectOption;
   }
 
-  onOpenClick(e){
-    e.preventDefault();
-    this.setState({isOpen: true});
+  onSmallCheck() {
+    this.setState({isSmall: !this.state.isSmall});
   }
 
-  onCloseRequest(){
-    this.setState({isOpen: false});
+  onDisableCheck() {
+    this.setState({isDisabled: !this.state.isDisabled});
+  }
+
+  onOpenUpCheck() {
+    this.setState({isOpenUp: !this.state.isOpenUp});
+  }
+
+  onSelectOption(option) {
+    this.setState({selectedOption: option});
   }
 
   render() {
+    const options = [
+      {value: "uva", label: "Uva"},
+      {value: "maca", label: "Maçã"},
+      {value: "manga", label: "Manga"},
+      {value: "tangerina", label: "Tangerina"},
+    ];
+
     return (
       <div>
-        <header className="heading"><h1>Backstage Modal Demo</h1></header>
+        <header className="heading"><h1>Backstage Dropdown Demo</h1></header>
 
         <div className="content">
-          <Dropdown options={['uva', 'maca', 'manga', 'tangerina']}/>
+          <div className="modes">
+            <input name="small" type="checkbox" onChange={this.onSmallCheck} /> Small
+            <input name="disable" type="checkbox" onChange={this.onDisableCheck} /> Disable
+            <input name="open-up" type="checkbox" onChange={this.onOpenUpCheck} /> Open Up
+          </div>
+
+          <Dropdown className="dropdown"
+            options={options} small={this.state.isSmall}
+            disabled={this.state.isDisabled} openUp={this.state.isOpenUp}
+            onSelectOption={this.onSelectOption}
+          />
+
+          <p>Selected Option: { JSON.stringify(this.state.selectedOption) }</p>
         </div>
       </div>
     );

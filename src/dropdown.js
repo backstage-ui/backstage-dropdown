@@ -7,19 +7,21 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
-import Option from './option';
-import styles from './dropdown.css';
+import classNames from "classnames";
+import Option from "./option";
 
 export default class Dropdown extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { value: props.value, dropdown: false, hover: false };
-    this.onClick = this.onClick.bind(this);
-    this.optionChange = this.optionChange.bind(this);
-    this.mouseOver = this.mouseOver.bind(this);
-    this.mouseOut = this.mouseOut.bind(this);
-    this.handleDocumentClick = this.handleDocumentClick.bind(this);
+    this.state = {
+      selectedItem: this.props.options[0],
+      dropdown: false
+    };
+
+    this.onClick = ::this.onClick;
+    this.onSelectItem = ::this.onSelectItem;
+    this.handleDocumentClick = ::this.handleDocumentClick;
   }
 
   componentDidMount() {
@@ -32,86 +34,58 @@ export default class Dropdown extends Component {
     document.removeEventListener('touchend', this.handleDocumentClick, false);
   }
 
-  onClick() {
-    const dropdown = this.state.dropdown;
-    this.setState({ dropdown: !dropdown, hover: false });
-  }
-
-  mouseOver() {
-    this.setState({ hover: true });
-  }
-
-  mouseOut() {
-    this.setState({ hover: false });
-  }
-
-  optionChange(value) {
-    this.setState({ value });
-    this.props.onChange();
-  }
-
   handleDocumentClick() {
     if (!ReactDOM.findDOMNode(this).contains(event.target)) {
       this.setState({ dropdown: false });
     }
   }
 
+  onClick() {
+    const dropdown = this.state.dropdown;
+    this.setState({ dropdown: !dropdown });
+
+    if (dropdown) {
+      this.props.onClose();
+    } else {
+      this.props.onOpen();
+    }
+  }
+
+  onSelectItem(selectedItem) {
+    this.setState({selectedItem: selectedItem, dropdown: false});
+    this.props.onSelectOption(selectedItem);
+  }
+
   renderOptions() {
     const options = this.props.options.map((option) => {
-      const selected = (option === this.state.value);
-      const opt = (<Option
-        key={option}
-        selected={selected}
-        value={option}
-        onChange={this.optionChange}
-      />);
-      return opt;
+      return (
+        <Option key={option.value}
+          value={option.value}
+          label={option.label}
+          onSelect={this.onSelectItem}
+          selected={ this.state.selectedItem && this.state.selectedItem.value == option.value }
+        />
+      );
     });
-    let optionsContainer;
-    if (options.length > 0) {
-      optionsContainer = <div className="dropdown-options" style={styles.options}>{options}</div>;
-    }
-    return optionsContainer;
+    return options;
   }
 
   render() {
-    let dropdownStyle = styles.dropdown;
-    let arrowStyle = styles.arrow;
-    let placeholderStyle = styles.placeholder;
-    const containerStyle = Object.assign({}, styles.container, this.props.style);
+    const dropdownClassNames = classNames({
+      "bs-ui-dropdown": true,
+      "bs-ui-dropdown--open": this.state.dropdown,
+      "bs-ui-dropdown--small": this.props.small,
+      "bs-ui-dropdown--open-up": this.props.openUp,
+      "bs-ui-dropdown--disabled": this.props.disabled,
+    }, this.props.className);
+    const selectedItem = this.state.selectedItem ? this.state.selectedItem : this.props.options[0];
 
-    if (this.state.hover) {
-      dropdownStyle = Object.assign({}, dropdownStyle, styles.dropdownHover);
-      arrowStyle = Object.assign({}, arrowStyle, styles.arrowHover);
-    }
-
-    const selected = (this.props.value !== this.state.value);
-
-    if (selected && !this.state.hover) {
-      arrowStyle = Object.assign({}, arrowStyle, styles.arrowSelected);
-      placeholderStyle = Object.assign({}, placeholderStyle, styles.placeholderSelected);
-    }
     return (
-      <div
-        className={this.props.className}
-        onClick={this.onClick}
-        style={containerStyle}
-        onMouseOver={this.mouseOver}
-        onMouseOut={this.mouseOut}
-      >
-        <input
-          type="hidden"
-          name={this.props.name}
-          id="backstage-dropdown"
-          value={this.state.value}
-        />
-        <div style={dropdownStyle}>
-          <div className="dropdown-placeholder" style={placeholderStyle}>
-            {this.state.value.length > 0 ? this.state.value : this.props.placeholder}
-          </div>
-          <span className="dropdown-arrow" style={arrowStyle} />
-        </div>
-        {this.state.dropdown ? this.renderOptions() : <div />}
+      <div className={dropdownClassNames} onClick={() => this.props.disabled || this.state.dropdown || this.onClick() }>
+        <div className="bs-ui-dropdown__item">{selectedItem.label}</div>
+        <ul className="bs-ui-dropdown__list">
+          {this.renderOptions()}
+        </ul>
       </div>
     );
   }
@@ -119,21 +93,22 @@ export default class Dropdown extends Component {
 
 Dropdown.propTypes = {
   className: React.PropTypes.string,
-  label: React.PropTypes.string,
-  placeholder: React.PropTypes.string,
-  value: React.PropTypes.string,
-  name: React.PropTypes.string,
+  disabled: React.PropTypes.bool,
+  small: React.PropTypes.bool,
+  openUp: React.PropTypes.bool,
   options: React.PropTypes.array,
-  onChange: React.PropTypes.func,
-  style: React.PropTypes.object,
+  onOpen: React.PropTypes.func,
+  onClose: React.PropTypes.func,
+  onSelectOption: React.PropTypes.func,
 };
 
 Dropdown.defaultProps = {
-  label: '',
-  placeholder: '',
-  value: '',
-  name: '',
+  className: "",
+  disabled: false,
+  small: false,
+  openUp: false,
   options: [],
-  onChange: () => {},
-  style: {},
+  onOpen: () => {},
+  onClose: () => {},
+  onSelectOption: () => {},
 };

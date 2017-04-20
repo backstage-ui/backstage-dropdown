@@ -4,31 +4,23 @@ import { shallow, mount } from 'enzyme';
 import Option from '../option';
 
 describe('<Option />', () => {
-  it('should has hover state', () => {
-    const option = shallow(<Option />);
-    expect(option.state('hover')).toBe(false);
+  it('selected should contain expected className', () => {
+    const wrapper = shallow(<Option selected={true} />);
+    expect(wrapper.prop('className')).toContain('bs-ui-dropdown__list-item--selected');
   });
 
-  it('should className be dropdown-option', () => {
-    const wrapper = shallow(<Option />);
-    expect(wrapper.hasClass('dropdown-option')).toBe(true);
-  });
+  it('should call onSelect with expect data', (done) => {
+    const data = {
+      label: 'Teste',
+      value: 'teste'
+    };
 
-  it('should has value', () => {
-    const wrapper = shallow(<Option value="my value" />);
-    expect(wrapper.prop('value')).toBe('my value');
-  });
+    const onSelect = function (responseData) {
+      expect(responseData).toEqual(data);
+      done();
+    }
 
-  it('should use value as text', () => {
-    const wrapper = shallow(<Option value="my value" />);
-    expect(wrapper.text()).toBe('my value');
-  });
-
-  it('should support onChange', () => {
-    let result;
-    const wrapper = mount(<Option value="my value" onChange={(value) => { result = value; }} />);
+    const wrapper = mount(<Option label={data.label} value={data.value} onSelect={(data) => onSelect(data)} />);
     wrapper.simulate('click');
-
-    expect(result).toBe('my value');
   });
 });

@@ -5,51 +5,45 @@ import Dropdown from '../dropdown';
 import Option from '../option';
 
 describe('<Dropdown />', () => {
+  const options = [
+    {label: "Label Teste", value: "teste"}
+  ];
   it('should accept className', () => {
-    const wrapper = shallow(<Dropdown className="foobar" />);
+    const wrapper = shallow(<Dropdown options={options} className="foobar" />);
     expect(wrapper.hasClass('foobar')).toBe(true);
   });
 
-  it('should accept placeholder', () => {
-    const wrapper = shallow(<Dropdown placeholder="my placeholder" />);
-    const placeholder = wrapper.find('.dropdown-placeholder');
+  it('click should enable dropdown', () => {
+    const wrapper = mount(<Dropdown options={options} />);
 
-    expect(placeholder.text()).toBe('my placeholder');
-  });
-
-  it('should has an arrow', () => {
-    const wrapper = shallow(<Dropdown placeholder="my placeholder" />);
-    const arrow = wrapper.find('.dropdown-arrow');
-
-    expect(arrow.length).toBe(1);
-  });
-
-  it('should accept initial value', () => {
-    const wrapper = shallow(<Dropdown value="my value" />);
-    const input = wrapper.find('input');
-
-    expect(input.prop('value')).toBe('my value');
-  });
-
-  it('should accept custom name', () => {
-    const wrapper = shallow(<Dropdown name="my-dropdown" />);
-    const input = wrapper.find('input');
-
-    expect(input.prop('name')).toBe('my-dropdown');
-  });
-
-  it('should enable/disable drodpwn', () => {
-    const wrapper = mount(<Dropdown />);
-
-    expect(wrapper.state('dropdown')).toBe(false);
+    expect(wrapper.hasClass('bs-ui-dropdown--open')).toBe(false);
 
     wrapper.simulate('click');
-    expect(wrapper.state('dropdown')).toBe(true);
+    expect(wrapper.update().hasClass('bs-ui-dropdown--open')).toBe(true);
 
     wrapper.simulate('click');
-    expect(wrapper.state('dropdown')).toBe(false);
+    expect(wrapper.update().hasClass('bs-ui-dropdown--open')).toBe(false);
   });
 
+  it('click out should disable dropdown', (done) => {
+    const wrapper = mount(<Dropdown options={options} />);
+
+    expect(wrapper.hasClass('bs-ui-dropdown--open')).toBe(false);
+
+    wrapper.simulate('click');
+    expect(wrapper.update().hasClass('bs-ui-dropdown--open')).toBe(true);
+
+    document.body.addEventListener('click', function () {
+      console.log('LAMEIRA');
+      expect(wrapper.update().hasClass('bs-ui-dropdown--open')).toBe(false);
+      console.log(wrapper);
+      done();
+    }, false);
+    document.body.click();
+  });
+
+
+/*
   it('should have options', () => {
     const wrapper = mount(<Dropdown options={['1', '2', '3']} />);
 
@@ -110,5 +104,5 @@ describe('<Dropdown />', () => {
     option.simulate('click');
 
     expect(result).toBe('changed');
-  });
+  });*/
 });

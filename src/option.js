@@ -5,64 +5,47 @@
  */
 
 import React, { Component } from 'react';
-import styles from './dropdown.css';
+
+import classNames from "classnames";
 
 export default class Option extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { hover: false };
-    this.mouseOver = this.mouseOver.bind(this);
-    this.mouseOut = this.mouseOut.bind(this);
-    this.onClick = this.onClick.bind(this);
+    this.onClick = ::this.onClick;
   }
 
   onClick() {
-    this.props.onChange(this.props.value);
-  }
-
-  mouseOver() {
-    this.setState({ hover: true });
-  }
-
-  mouseOut() {
-    this.setState({ hover: false });
+    this.props.onSelect({
+      value: this.props.value,
+      label: this.props.label
+    });
   }
 
   render() {
-    let optionStyle = styles.option;
-
-    if (this.state.hover) {
-      optionStyle = Object.assign({}, optionStyle, styles.optionHover);
-    }
-
-    if (this.props.selected && !this.state.hover) {
-      optionStyle = Object.assign({}, optionStyle, styles.optionSelected);
-    }
+    const optionClassNames = classNames({
+      "bs-ui-dropdown__list-item": true,
+      "bs-ui-dropdown__list-item--selected": this.props.selected
+    });
 
     return (
-      <div
-        value={this.props.value}
-        className="dropdown-option"
-        onClick={this.onClick}
-        onMouseOver={this.mouseOver}
-        onMouseOut={this.mouseOut}
-        style={optionStyle}
-      >
-        {this.props.value}
-      </div>
+      <li className={optionClassNames} onClick={this.onClick}>
+        {this.props.label}
+      </li>
     );
   }
 }
 
 Option.propTypes = {
   value: React.PropTypes.string,
-  onChange: React.PropTypes.func,
+  label: React.PropTypes.string,
+  onSelect: React.PropTypes.func,
   selected: React.PropTypes.bool,
 };
 
 Option.defaultProps = {
-  value: '',
-  onChange: () => {},
+  value: "",
+  label: "",
+  onSelect: () => {},
   selected: false,
 };
