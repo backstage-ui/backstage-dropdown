@@ -34,8 +34,9 @@ export default class Dropdown extends Component {
     document.removeEventListener('touchend', this.handleDocumentClick, false);
   }
 
-  handleDocumentClick() {
+  handleDocumentClick(event) {
     if (!ReactDOM.findDOMNode(this).contains(event.target)) {
+      this.props.onClose();
       this.setState({ dropdown: false });
     }
   }
