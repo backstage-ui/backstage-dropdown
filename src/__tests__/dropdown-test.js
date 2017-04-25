@@ -42,6 +42,16 @@ describe('<Dropdown />', () => {
     expect(renderedOptions.length).toBe(3);
   });
 
+  it('should accept options as Array of Strings', () => {
+    const stringOptions = ['string 1', 'string 2'];
+    const wrapper = shallow(<Dropdown options={stringOptions} />);
+    const renderedOptions = wrapper.find(Option);
+
+    expect(renderedOptions.length).toBe(2);
+    expect(renderedOptions.first().prop('value')).toEqual(stringOptions[0]);
+    expect(renderedOptions.last().prop('value')).toEqual(stringOptions[1]);
+  });
+
   it('click should open dropdown', () => {
     const wrapper = mount(<Dropdown options={options} />);
 
