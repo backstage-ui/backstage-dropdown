@@ -47,9 +47,6 @@
     "webpack": "^1.13.2",
     "webpack-dev-server": "^1.16.1"
   },
-  "jest": {
-    "automock": false
-  },
   "dependencies": {
     "classnames": "^2.2.5",
     "prop-types": "^15.5.8",
