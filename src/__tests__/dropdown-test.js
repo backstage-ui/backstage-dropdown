@@ -52,94 +52,108 @@ describe('<Dropdown />', () => {
     expect(renderedOptions.last().prop('value')).toEqual(stringOptions[1]);
   });
 
-  it('click should open dropdown', () => {
+  it('should have options', () => {
     const wrapper = mount(<Dropdown options={options} />);
 
-    expect(wrapper.hasClass('bs-ui-dropdown--open')).toBe(false);
-
     wrapper.simulate('click');
-    expect(wrapper.update().hasClass('bs-ui-dropdown--open')).toBe(true);
+    const renderedOptions = wrapper.find(Option);
+    expect(renderedOptions.length).toBe(3);
   });
 
-  it('click out should close dropdown', (done) => {
-    const wrapper = mount(<Dropdown options={options} />);
+  describe('click', function () {
+    it('should open dropdown', () => {
+      const wrapper = mount(<Dropdown options={options} />);
 
-    expect(wrapper.hasClass('bs-ui-dropdown--open')).toBe(false);
+      expect(wrapper.hasClass('bs-ui-dropdown--open')).toBe(false);
 
-    wrapper.simulate('click');
-    expect(wrapper.update().hasClass('bs-ui-dropdown--open')).toBe(true);
-
-    const expectCallback = function () {
-      expect(wrapper.update().hasClass('bs-ui-dropdown--open')).toBe(false);
-      done();
-    };
-
-    document.addEventListener('click', expectCallback, false);
-    callbacks.push(function () {
-      document.removeEventListener('click', expectCallback, false);
+      wrapper.simulate('click');
+      expect(wrapper.update().hasClass('bs-ui-dropdown--open')).toBe(true);
     });
 
-    dispatchEvent('click', document.body);
+    it('out should close dropdown', (done) => {
+      const wrapper = mount(<Dropdown options={options} />);
+
+      expect(wrapper.hasClass('bs-ui-dropdown--open')).toBe(false);
+
+      wrapper.simulate('click');
+      expect(wrapper.update().hasClass('bs-ui-dropdown--open')).toBe(true);
+
+      const expectCallback = function () {
+        expect(wrapper.update().hasClass('bs-ui-dropdown--open')).toBe(false);
+        done();
+      };
+
+      document.addEventListener('click', expectCallback, false);
+      callbacks.push(function () {
+        document.removeEventListener('click', expectCallback, false);
+      });
+
+      dispatchEvent('click', document.body);
+    });
   });
 
-  it('click on option should close dropdown', () => {
-    const wrapper = mount(<Dropdown options={options} />);
-    wrapper.simulate('click');
+  describe('select option', function () {
+    it('should close dropdown', () => {
+      const wrapper = mount(<Dropdown options={options} />);
+      wrapper.simulate('click');
 
-    const option = wrapper.find(Option).first();
-    option.simulate('click');
-    expect(wrapper.update().hasClass('bs-ui-dropdown--open')).toBe(false);
+      const option = wrapper.find(Option).first();
+      option.simulate('click');
+      expect(wrapper.update().hasClass('bs-ui-dropdown--open')).toBe(false);
+    });
+
+    it('should change selected option', () => {
+      const wrapper = mount(<Dropdown options={options} />);
+      wrapper.simulate('click');
+
+      const option = wrapper.find(Option).first();
+      option.simulate('click');
+
+      const selectedOption = wrapper.find('.bs-ui-dropdown__item');
+      expect(selectedOption.text()).toBe(options[0].label);
+    });
+
+    it('should set selected state to the selected option', () => {
+      const wrapper = mount(<Dropdown options={options} />);
+      wrapper.simulate('click');
+
+      const option = wrapper.find(Option).last();
+      expect(option.props().selected).toBe(false);
+
+      option.simulate('click');
+      expect(option.prop('selected')).toBe(true);
+    });
   });
 
-  it('click option should change selected option', () => {
-    const wrapper = mount(<Dropdown options={options} />);
-    wrapper.simulate('click');
+  describe('should call', function () {
+    it('onSelectOption callback whenever a option has been selected', (done) => {
+      const onSelectOption = function (selectedOption) {
+        expect(selectedOption).toEqual(options[options.length - 1]);
+        done();
+      };
+      const wrapper = mount(<Dropdown options={options} onSelectOption={onSelectOption} />);
+      const option = wrapper.find(Option).last();
 
-    const option = wrapper.find(Option).first();
-    option.simulate('click');
+      wrapper.simulate('click');
+      option.simulate('click');
+    });
 
-    const selectedOption = wrapper.find('.bs-ui-dropdown__item');
-    expect(selectedOption.text()).toBe(options[0].label);
-  });
+    it('onOpen callback whenever the dropdown is opened', (done) => {
+      const onOpen = function () {
+        done();
+      };
+      const wrapper = mount(<Dropdown options={options} onOpen={onOpen} />);
+      wrapper.simulate('click');
+    });
 
-  it('selected options must have a selected state', () => {
-    const wrapper = mount(<Dropdown options={options} />);
-    wrapper.simulate('click');
+    it('onClose callback whenever the dropdown is closed', (done) => {
+      const onClose = function () {
+        done();
+      };
+      const wrapper = mount(<Dropdown options={options} onClose={onClose} />);
 
-    const option = wrapper.find(Option).last();
-    expect(option.props().selected).toBe(false);
-
-    option.simulate('click');
-    expect(option.prop('selected')).toBe(true);
-  });
-
-  it('should call onSelectOption callback whenever a option has been selected', (done) => {
-    const onSelectOption = function (selectedOption) {
-      expect(selectedOption).toEqual(options[options.length - 1]);
-      done();
-    };
-    const wrapper = mount(<Dropdown options={options} onSelectOption={onSelectOption} />);
-    const option = wrapper.find(Option).last();
-
-    wrapper.simulate('click');
-    option.simulate('click');
-  });
-
-  it('should call onOpen callback whenever the dropdown is opened', (done) => {
-    const onOpen = function () {
-      done();
-    };
-    const wrapper = mount(<Dropdown options={options} onOpen={onOpen} />);
-    wrapper.simulate('click');
-  });
-
-  it('should call onClose callback whenever the dropdown is closed', (done) => {
-    const onClose = function () {
-      done();
-    };
-    const wrapper = mount(<Dropdown options={options} onClose={onClose} />);
-
-    wrapper.simulate('click');
-    dispatchEvent('click', document.body);
+      wrapper.simulate('click');
+      dispatchEvent('click', document.body);
+    });
   });
 });
