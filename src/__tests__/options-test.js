@@ -3,13 +3,13 @@ import React from 'react';
 import { shallow, mount } from 'enzyme';
 import Option from '../option';
 
-describe('<Option />', () => {
-  it('selected should contain expected className', () => {
+describe('<Option />', function () {
+  it('selected should contain expected className', function () {
     const wrapper = shallow(<Option selected={true} />);
     expect(wrapper.prop('className')).toContain('bs-ui-dropdown__list-item--selected');
   });
 
-  it('should call onSelect with expect data', (done) => {
+  it('should call onSelect with expect data', function (done) {
     const data = {
       label: 'Teste',
       value: 'teste'

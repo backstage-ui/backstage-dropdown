@@ -4,7 +4,7 @@ import { shallow, mount } from 'enzyme';
 import Dropdown from '../dropdown';
 import Option from '../option';
 
-describe('<Dropdown />', () => {
+describe('<Dropdown />', function () {
   let callbacks;
 
   const options = [
@@ -29,12 +29,12 @@ describe('<Dropdown />', () => {
     el.dispatchEvent(evt);
   }
 
-  it('should accept className', () => {
+  it('should accept className', function () {
     const wrapper = shallow(<Dropdown options={options} className="foobar" />);
     expect(wrapper.hasClass('foobar')).toBe(true);
   });
 
-  it('should have options', () => {
+  it('should have options', function () {
     const wrapper = mount(<Dropdown options={options} />);
 
     wrapper.simulate('click');
@@ -42,7 +42,7 @@ describe('<Dropdown />', () => {
     expect(renderedOptions.length).toBe(3);
   });
 
-  it('should accept options as Array of Strings', () => {
+  it('should accept options as Array of Strings', function () {
     const stringOptions = ['string 1', 'string 2'];
     const wrapper = shallow(<Dropdown options={stringOptions} />);
     const renderedOptions = wrapper.find(Option);
@@ -52,7 +52,7 @@ describe('<Dropdown />', () => {
     expect(renderedOptions.last().prop('value')).toEqual(stringOptions[1]);
   });
 
-  it('should have options', () => {
+  it('should have options', function () {
     const wrapper = mount(<Dropdown options={options} />);
 
     wrapper.simulate('click');
@@ -61,7 +61,7 @@ describe('<Dropdown />', () => {
   });
 
   describe('click', function () {
-    it('should open dropdown', () => {
+    it('should open dropdown', function () {
       const wrapper = mount(<Dropdown options={options} />);
 
       expect(wrapper.hasClass('bs-ui-dropdown--open')).toBe(false);
@@ -93,7 +93,7 @@ describe('<Dropdown />', () => {
   });
 
   describe('select option', function () {
-    it('should close dropdown', () => {
+    it('should close dropdown', function () {
       const wrapper = mount(<Dropdown options={options} />);
       wrapper.simulate('click');
 
@@ -102,7 +102,7 @@ describe('<Dropdown />', () => {
       expect(wrapper.update().hasClass('bs-ui-dropdown--open')).toBe(false);
     });
 
-    it('should change selected option', () => {
+    it('should change selected option', function () {
       const wrapper = mount(<Dropdown options={options} />);
       wrapper.simulate('click');
 
@@ -113,7 +113,7 @@ describe('<Dropdown />', () => {
       expect(selectedOption.text()).toBe(options[0].label);
     });
 
-    it('should set selected state to the selected option', () => {
+    it('should set selected state to the selected option', function () {
       const wrapper = mount(<Dropdown options={options} />);
       wrapper.simulate('click');
 
@@ -126,7 +126,7 @@ describe('<Dropdown />', () => {
   });
 
   describe('should call', function () {
-    it('onSelectOption callback whenever a option has been selected', (done) => {
+    it('onSelectOption callback whenever a option has been selected', function (done) {
       const onSelectOption = function (selectedOption) {
         expect(selectedOption).toEqual(options[options.length - 1]);
         done();
@@ -138,7 +138,7 @@ describe('<Dropdown />', () => {
       option.simulate('click');
     });
 
-    it('onOpen callback whenever the dropdown is opened', (done) => {
+    it('onOpen callback whenever the dropdown is opened', function (done) {
       const onOpen = function () {
         done();
       };
@@ -146,7 +146,7 @@ describe('<Dropdown />', () => {
       wrapper.simulate('click');
     });
 
-    it('onClose callback whenever the dropdown is closed', (done) => {
+    it('onClose callback whenever the dropdown is closed', function (done) {
       const onClose = function () {
         done();
       };
