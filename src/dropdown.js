@@ -7,6 +7,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
+import PropTypes from 'prop-types';
 import classNames from "classnames";
 import Option from "./option";
 
@@ -93,14 +94,14 @@ export default class Dropdown extends Component {
 }
 
 Dropdown.propTypes = {
-  className: React.PropTypes.string,
-  disabled: React.PropTypes.bool,
-  small: React.PropTypes.bool,
-  openUp: React.PropTypes.bool,
-  options: React.PropTypes.array,
-  onOpen: React.PropTypes.func,
-  onClose: React.PropTypes.func,
-  onSelectOption: React.PropTypes.func,
+  className: PropTypes.string,
+  disabled: PropTypes.bool,
+  small: PropTypes.bool,
+  openUp: PropTypes.bool,
+  options: PropTypes.array,
+  onOpen: PropTypes.func,
+  onClose: PropTypes.func,
+  onSelectOption: PropTypes.func,
 };
 
 Dropdown.defaultProps = {

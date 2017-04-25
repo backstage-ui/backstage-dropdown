@@ -6,6 +6,7 @@
 
 import React, { Component } from 'react';
 
+import PropTypes from 'prop-types';
 import classNames from "classnames";
 
 export default class Option extends Component {
@@ -37,10 +38,10 @@ export default class Option extends Component {
 }
 
 Option.propTypes = {
-  value: React.PropTypes.string,
-  label: React.PropTypes.string,
-  onSelect: React.PropTypes.func,
-  selected: React.PropTypes.bool,
+  value: PropTypes.string,
+  label: PropTypes.string,
+  onSelect: PropTypes.func,
+  selected: PropTypes.bool,
 };
 
 Option.defaultProps = {
