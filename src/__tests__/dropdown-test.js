@@ -1,6 +1,7 @@
 /* global describe, it, expect */
 import React from 'react';
 import { shallow, mount } from 'enzyme';
+
 import Dropdown from '../dropdown';
 import Option from '../option';
 
@@ -118,34 +119,32 @@ describe('<Dropdown />', function () {
   });
 
   describe('should call', function () {
-    it('onSelectOption callback whenever a option has been selected', function (done) {
-      const onSelectOption = function (selectedOption) {
-        expect(selectedOption).toEqual(options[options.length - 1]);
-        done();
-      };
+    it('onSelectOption callback whenever a option has been selected', function () {
+      const onSelectOption = jest.fn();
       const wrapper = mount(<Dropdown options={options} onSelectOption={onSelectOption} />);
       const option = wrapper.find(Option).last();
 
       wrapper.simulate('click');
       option.simulate('click');
+      expect(onSelectOption).toBeCalled();
+      expect(onSelectOption).toBeCalledWith(options[options.length - 1]);
     });
 
-    it('onOpen callback whenever the dropdown is opened', function (done) {
-      const onOpen = function () {
-        done();
-      };
+    it('onOpen callback whenever the dropdown is opened', function () {
+      const onOpen = jest.fn();
       const wrapper = shallow(<Dropdown options={options} onOpen={onOpen} />);
+
       wrapper.simulate('click');
+      expect(onOpen).toBeCalled();
     });
 
-    it('onClose callback whenever the dropdown is closed', function (done) {
-      const onClose = function () {
-        done();
-      };
+    it('onClose callback whenever the dropdown is closed', function () {
+      const onClose = jest.fn();
       const wrapper = mount(<Dropdown options={options} onClose={onClose} />);
 
       wrapper.simulate('click');
       dispatchEvent('click', document.body);
+      expect(onClose).toBeCalled();
     });
   });
 });
