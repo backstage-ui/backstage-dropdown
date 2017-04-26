@@ -20,7 +20,7 @@ describe('<Option />', function () {
       done();
     }
 
-    const wrapper = mount(<Option label={data.label} value={data.value} onSelect={(data) => onSelect(data)} />);
+    const wrapper = shallow(<Option label={data.label} value={data.value} onSelect={(data) => onSelect(data)} />);
     wrapper.simulate('click');
   });
 });

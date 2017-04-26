@@ -105,7 +105,7 @@ Dropdown.propTypes = {
   disabled: PropTypes.bool,
   small: PropTypes.bool,
   openUp: PropTypes.bool,
-  options: PropTypes.array,
+  options: PropTypes.array.isRequired,
   onOpen: PropTypes.func,
   onClose: PropTypes.func,
   onSelectOption: PropTypes.func,
