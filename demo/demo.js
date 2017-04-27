@@ -9,6 +9,13 @@ import ReactDOM from "react-dom";
 
 import Dropdown from '../src/dropdown';
 
+const OPTIONS = [
+  {value: "uva", label: "Uva"},
+  {value: "maca", label: "Maçã"},
+  {value: "manga", label: "Manga"},
+  {value: "tangerina", label: "Tangerina"},
+];
+
 class Demo extends React.Component {
   constructor(){
     super();
@@ -43,13 +50,6 @@ class Demo extends React.Component {
   }
 
   render() {
-    const options = [
-      {value: "uva", label: "Uva"},
-      {value: "maca", label: "Maçã"},
-      {value: "manga", label: "Manga"},
-      {value: "tangerina", label: "Tangerina"},
-    ];
-
     return (
       <div>
         <header className="heading"><h1>Backstage Dropdown Demo</h1></header>
@@ -62,7 +62,7 @@ class Demo extends React.Component {
           </div>
 
           <Dropdown className="dropdown"
-            options={options} small={this.state.isSmall}
+            options={OPTIONS} small={this.state.isSmall}
             disabled={this.state.isDisabled} openUp={this.state.isOpenUp}
             onSelectOption={this.onSelectOption}
           />
