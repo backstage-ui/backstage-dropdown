@@ -4,12 +4,12 @@
  * License: MIT
  */
 
-import React, { Component } from 'react';
+import React, { Component, PureComponent } from 'react';
 
 import PropTypes from 'prop-types';
 import classNames from "classnames";
 
-export default class Option extends Component {
+export default class Option extends PureComponent {
   constructor(props) {
     super(props);
 

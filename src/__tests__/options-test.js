@@ -1,9 +1,12 @@
 /* global describe, it, expect */
-import React from 'react';
+import React, { Component } from 'react';
+
 import { shallow, mount } from 'enzyme';
+import sinon from 'sinon';
+
 import Option from '../option';
 
-describe('<Option />', function () {
+describe('Option', function () {
   it('selected should contain expected className', function () {
     const wrapper = shallow(<Option selected={true} />);
     expect(wrapper.prop('className')).toContain('bs-ui-dropdown__list-item--selected');
@@ -22,5 +25,38 @@ describe('<Option />', function () {
 
     const wrapper = shallow(<Option label={data.label} value={data.value} onSelect={(data) => onSelect(data)} />);
     wrapper.simulate('click');
+  });
+
+  describe('should component update', function () {
+    class FakeComponent extends Component  {
+      render() {
+        return (
+          <Option selected={this.props.selected} value='maca' label='Maca' />
+        );
+      }
+    }
+
+    beforeEach(function () {
+      this.renderStub = sinon.stub(Option.prototype, "render").returns(null);
+      this.wrapper = mount(<FakeComponent selected={false} />);
+    });
+
+    afterEach(function () {
+      this.renderStub.restore();
+    });
+
+    it('should not rerender if props and state not change', function () {
+      this.wrapper.setProps({selected: false});
+      this.wrapper.update();
+
+      expect(this.renderStub.calledTwice).not.toBeTruthy();
+    });
+
+    it('should rerender if props and state change', function () {
+      this.wrapper.setProps({selected: true});
+      this.wrapper.update();
+
+      expect(this.renderStub.calledTwice).toBeTruthy();
+    });
   });
 });
