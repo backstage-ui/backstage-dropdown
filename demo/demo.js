@@ -24,7 +24,7 @@ class Demo extends React.Component {
       isSmall: false,
       isDisabled: false,
       isOpenUp: false,
-      selectedOption: {}
+      selectedOption: OPTIONS[0]
     };
 
     this.onSmallCheck = ::this.onSmallCheck;
@@ -62,9 +62,9 @@ class Demo extends React.Component {
           </div>
 
           <Dropdown className="dropdown"
-            options={OPTIONS} small={this.state.isSmall}
-            disabled={this.state.isDisabled} openUp={this.state.isOpenUp}
-            onSelectOption={this.onSelectOption}
+            options={OPTIONS} selectedOption={this.state.selectedOption.value}
+            small={this.state.isSmall} disabled={this.state.isDisabled}
+            openUp={this.state.isOpenUp} onSelectOption={this.onSelectOption}
           />
 
           <p>Selected Option: { JSON.stringify(this.state.selectedOption) }</p>

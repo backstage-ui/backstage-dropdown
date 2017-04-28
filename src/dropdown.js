@@ -16,7 +16,6 @@ export default class Dropdown extends Component {
     super(props);
 
     this.state = {
-      selectedItem: this.props.options[0],
       dropdown: false
     };
 
@@ -26,12 +25,10 @@ export default class Dropdown extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    if (
-      nextState.dropdown !== this.state.dropdown ||
-      nextState.selectedItem !== this.state.selectedItem
-    ) {
+    if (nextState.dropdown !== this.state.dropdown) {
       return true;
     } else if (
+      nextProps.selectedOption !== this.props.selectedOption ||
       nextProps.options !== this.props.options ||
       nextProps.disabled !== this.props.disabled ||
       nextProps.small !== this.props.small ||
@@ -64,7 +61,6 @@ export default class Dropdown extends Component {
   onSelectItem(selectedItem) {
     this.setState({
       ...this.state,
-      selectedItem: selectedItem,
       dropdown: false
     });
     this.props.onSelectOption(selectedItem);
@@ -114,7 +110,7 @@ export default class Dropdown extends Component {
           value={option.value}
           label={option.label}
           onSelect={this.onSelectItem}
-          selected={ this.state.selectedItem && this.state.selectedItem.value == option.value }
+          selected={ this.props.selectedOption === option.value }
         />
       );
     });
@@ -129,11 +125,11 @@ export default class Dropdown extends Component {
       "bs-ui-dropdown--open-up": this.props.openUp,
       "bs-ui-dropdown--disabled": this.props.disabled,
     }, this.props.className);
-    const selectedItem = this.state.selectedItem ? this.state.selectedItem : this.props.options[0];
+    const selectedItem = this.props.options.find((option) => option.value === this.props.selectedOption);
 
     return (
       <div className={dropdownClassNames} onClick={() => this.props.disabled || this.state.dropdown || this.onClick() }>
-        <div className="bs-ui-dropdown__item">{selectedItem.label}</div>
+        <div className="bs-ui-dropdown__item">{ selectedItem instanceof Object ? selectedItem.label : selectedItem }</div>
         <ul className="bs-ui-dropdown__list">
           {this.renderOptions()}
         </ul>
@@ -143,11 +139,13 @@ export default class Dropdown extends Component {
 }
 
 Dropdown.propTypes = {
+  options: PropTypes.array.isRequired,
+  selectedOption: PropTypes.string.isRequired,
+
   className: PropTypes.string,
   disabled: PropTypes.bool,
   small: PropTypes.bool,
   openUp: PropTypes.bool,
-  options: PropTypes.array.isRequired,
   onOpen: PropTypes.func,
   onClose: PropTypes.func,
   onSelectOption: PropTypes.func,
@@ -158,7 +156,6 @@ Dropdown.defaultProps = {
   disabled: false,
   small: false,
   openUp: false,
-  options: [],
   onOpen: () => {},
   onClose: () => {},
   onSelectOption: () => {},
