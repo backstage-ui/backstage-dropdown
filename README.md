@@ -16,7 +16,7 @@ $ npm install backstage-dropdown --save
 * `selectedOption`: current selected option;
 
 ### Props
-* `onSelectOption`: callback called when the select any option;
+* `onSelectOption`: callback called when the user select any option;
 * `onOpen`: callback called when the user open the dropdown;
 * `onClose`: callback called when the user close the dropdown:
     * by selecting an option,
