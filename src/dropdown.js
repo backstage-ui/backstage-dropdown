@@ -25,12 +25,67 @@ export default class Dropdown extends Component {
     this.handleDocumentClick = ::this.handleDocumentClick;
   }
 
-  componentDidMount() {
+  shouldComponentUpdate(nextProps, nextState) {
+    if (
+      nextState.dropdown !== this.state.dropdown ||
+      nextState.selectedItem !== this.state.selectedItem
+    ) {
+      return true;
+    } else if (
+      nextProps.options !== this.props.options ||
+      nextProps.disabled !== this.props.disabled ||
+      nextProps.small !== this.props.small ||
+      nextProps.className !== this.props.className
+    ) {
+      return true;
+    }
+    return false;
+  }
+
+  componentWillUnmount() {
+    this.unbindDocumentClick();
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    if (this.state.dropdown !== nextState.dropdown) {
+      if (nextState.dropdown) {
+        this.handleOpenDropdown();
+      } else {
+        this.handleCloseDropdown();
+      }
+    }
+  }
+
+  onClick() {
+    const dropdown = this.state.dropdown;
+    this.setState({ dropdown: !dropdown });
+  }
+
+  onSelectItem(selectedItem) {
+    this.setState({
+      ...this.state,
+      selectedItem: selectedItem,
+      dropdown: false
+    });
+    this.props.onSelectOption(selectedItem);
+  }
+
+  handleOpenDropdown() {
+    this.props.onOpen();
+    this.bindDocumentClick();
+  }
+
+  handleCloseDropdown() {
+    this.props.onClose();
+    this.unbindDocumentClick();
+  }
+
+  bindDocumentClick() {
     document.addEventListener('click', this.handleDocumentClick, false);
     document.addEventListener('touchend', this.handleDocumentClick, false);
   }
 
-  componentWillUnmount() {
+  unbindDocumentClick() {
     document.removeEventListener('click', this.handleDocumentClick, false);
     document.removeEventListener('touchend', this.handleDocumentClick, false);
   }
@@ -38,24 +93,11 @@ export default class Dropdown extends Component {
   handleDocumentClick(event) {
     if (!ReactDOM.findDOMNode(this).contains(event.target)) {
       this.props.onClose();
-      this.setState({ dropdown: false });
+      this.setState({
+        ...this.state,
+        dropdown: false
+      });
     }
-  }
-
-  onClick() {
-    const dropdown = this.state.dropdown;
-    this.setState({ dropdown: !dropdown });
-
-    if (dropdown) {
-      this.props.onClose();
-    } else {
-      this.props.onOpen();
-    }
-  }
-
-  onSelectItem(selectedItem) {
-    this.setState({selectedItem: selectedItem, dropdown: false});
-    this.props.onSelectOption(selectedItem);
   }
 
   renderOptions() {

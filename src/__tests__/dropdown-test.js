@@ -1,11 +1,13 @@
 /* global describe, it, expect */
-import React from 'react';
+import React, { Component } from 'react';
+
+import sinon from 'sinon';
 import { shallow, mount } from 'enzyme';
 
 import Dropdown from '../dropdown';
 import Option from '../option';
 
-describe('<Dropdown />', function () {
+describe('Dropdown', function () {
   let callbacks;
 
   const options = [
@@ -54,25 +56,25 @@ describe('<Dropdown />', function () {
   });
 
   describe('click', function () {
-    it('should open dropdown', function () {
-      const wrapper = shallow(<Dropdown options={options} />);
-
-      expect(wrapper.hasClass('bs-ui-dropdown--open')).toBe(false);
-
-      wrapper.simulate('click');
-      expect(wrapper.update().hasClass('bs-ui-dropdown--open')).toBe(true);
+    beforeEach(function () {
+      this.wrapper = mount(<Dropdown options={options} />);
     });
 
-    it('out should close dropdown', (done) => {
-      const wrapper = mount(<Dropdown options={options} />);
+    it('should open dropdown', function () {
+      expect(this.wrapper.hasClass('bs-ui-dropdown--open')).toBe(false);
 
-      expect(wrapper.hasClass('bs-ui-dropdown--open')).toBe(false);
+      this.wrapper.simulate('click');
+      expect(this.wrapper.update().hasClass('bs-ui-dropdown--open')).toBe(true);
+    });
 
-      wrapper.simulate('click');
-      expect(wrapper.update().hasClass('bs-ui-dropdown--open')).toBe(true);
+    it('out should close dropdown', function (done) {
+      expect(this.wrapper.hasClass('bs-ui-dropdown--open')).toBe(false);
 
-      const expectCallback = function () {
-        expect(wrapper.update().hasClass('bs-ui-dropdown--open')).toBe(false);
+      this.wrapper.simulate('click');
+      expect(this.wrapper.update().hasClass('bs-ui-dropdown--open')).toBe(true);
+
+      const expectCallback = () => {
+        expect(this.wrapper.update().hasClass('bs-ui-dropdown--open')).toBe(false);
         done();
       };
 
@@ -82,6 +84,16 @@ describe('<Dropdown />', function () {
       });
 
       dispatchEvent('click', document.body);
+    });
+
+    it('should remove document event listener if component is unmount', function () {
+      const spyDocumentClick = sinon.stub(this.wrapper.instance(), 'handleDocumentClick').returns();
+
+      this.wrapper.simulate('click');
+      this.wrapper.unmount();
+      document.body.click();
+
+      expect(spyDocumentClick.called).toBe(false);
     });
   });
 
@@ -145,6 +157,106 @@ describe('<Dropdown />', function () {
       wrapper.simulate('click');
       dispatchEvent('click', document.body);
       expect(onClose).toBeCalled();
+    });
+  });
+
+  describe('component update', function () {
+    beforeEach(function () {
+      this.renderStub = sinon.stub(Dropdown.prototype, "render").returns(null);
+      this.wrapper = mount(<Dropdown options={options} />);
+    });
+
+    afterEach(function () {
+      this.renderStub.restore();
+    });
+
+    describe('should not rerender', function () {
+      it('if props and state not change', function () {
+        this.wrapper.update()
+        expect(this.renderStub.calledTwice).toBe(false);
+      });
+
+      it('if openUp props change', function () {
+        this.wrapper.setProps({
+          ...this.wrapper.props,
+          openUp: true
+        });
+        expect(this.renderStub.calledTwice).toBe(false);
+      });
+
+      it('if onOpen props change', function () {
+        this.wrapper.setProps({
+          ...this.wrapper.props,
+          onOpen: function () {}
+        });
+        expect(this.renderStub.calledTwice).toBe(false);
+      });
+
+      it('if onClose props change', function () {
+        this.wrapper.setProps({
+          ...this.wrapper.props,
+          onClose: function () {}
+        });
+        expect(this.renderStub.calledTwice).toBe(false);
+      });
+
+      it('if onSelectOption props change', function () {
+        this.wrapper.setProps({
+          ...this.wrapper.props,
+          onSelectOption: function () {}
+        });
+        expect(this.renderStub.calledTwice).toBe(false);
+      });
+    });
+
+    describe('should rerender', function () {
+      it('if options change', function () {
+        this.wrapper.setProps({
+          ...this.wrapper.props,
+          options: [...options, {value: 'melao', label: 'Melao'}]
+        });
+        expect(this.renderStub.calledTwice).toBe(true);
+      });
+
+      it('if dropdown state change', function () {
+        this.wrapper.setState({
+          ...this.wrapper.state,
+          dropdown: true
+        });
+        expect(this.renderStub.calledTwice).toBe(true);
+      });
+
+      it('if small props change', function () {
+        this.wrapper.setProps({
+          ...this.wrapper.props,
+          small: true
+        });
+        expect(this.renderStub.calledTwice).toBe(true);
+      });
+
+      it('if disabled props change', function () {
+        this.wrapper.setProps({
+          ...this.wrapper.props,
+          disabled: true
+        });
+        expect(this.renderStub.calledTwice).toBe(true);
+      });
+
+      it('if className props change', function () {
+        this.wrapper.setProps({
+          ...this.wrapper.props,
+          className: 'testClass'
+        });
+        expect(this.renderStub.calledTwice).toBe(true);
+      });
+
+      it('if dropdown state change', function () {
+        this.wrapper.setState({
+          ...this.wrapper.state,
+          selectedItem: options[1]
+        });
+        expect(this.renderStub.calledTwice).toBe(true);
+      });
     });
   });
 });
