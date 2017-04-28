@@ -10,10 +10,10 @@ import ReactDOM from "react-dom";
 import Dropdown from '../src/dropdown';
 
 const OPTIONS = [
-  {value: "uva", label: "Uva"},
-  {value: "maca", label: "Maçã"},
-  {value: "manga", label: "Manga"},
-  {value: "tangerina", label: "Tangerina"},
+  {value: "grape", label: "Grape"},
+  {value: "apple", label: "Apple"},
+  {value: "mango", label: "Mango"},
+  {value: "tangerine", label: "Tangerine"},
 ];
 
 class Demo extends React.Component {
