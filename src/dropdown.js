@@ -123,7 +123,10 @@ export default class Dropdown extends Component {
 }
 
 Dropdown.propTypes = {
-  options: PropTypes.arrayOf(Object).isRequired,
+  options: PropTypes.arrayOf(PropTypes.shape({
+    label: PropTypes.string,
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  })).isRequired,
   selectedOption: PropTypes.string.isRequired,
 
   className: PropTypes.string,

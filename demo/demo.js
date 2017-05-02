@@ -4,27 +4,27 @@
  * License: MIT
  */
 
-import React from "react";
-import ReactDOM from "react-dom";
+import React from 'react';
+import ReactDOM from 'react-dom';
 
 import Dropdown from '../src/dropdown';
 
 const OPTIONS = [
-  {value: "grape", label: "Grape"},
-  {value: "apple", label: "Apple"},
-  {value: "mango", label: "Mango"},
-  {value: "tangerine", label: "Tangerine"},
+  { value: 'grape', label: 'Grape' },
+  { value: 'apple', label: 'Apple' },
+  { value: 'mango', label: 'Mango' },
+  { value: 'tangerine', label: 'Tangerine' },
 ];
 
 class Demo extends React.Component {
-  constructor(){
+  constructor() {
     super();
 
     this.state = {
       isSmall: false,
       isDisabled: false,
       isOpenUp: false,
-      selectedOption: OPTIONS[0]
+      selectedOption: OPTIONS[0],
     };
 
     this.onSmallCheck = ::this.onSmallCheck;
@@ -34,19 +34,19 @@ class Demo extends React.Component {
   }
 
   onSmallCheck() {
-    this.setState({isSmall: !this.state.isSmall});
+    this.setState({ isSmall: !this.state.isSmall });
   }
 
   onDisableCheck() {
-    this.setState({isDisabled: !this.state.isDisabled});
+    this.setState({ isDisabled: !this.state.isDisabled });
   }
 
   onOpenUpCheck() {
-    this.setState({isOpenUp: !this.state.isOpenUp});
+    this.setState({ isOpenUp: !this.state.isOpenUp });
   }
 
   onSelectOption(option) {
-    this.setState({selectedOption: option});
+    this.setState({ selectedOption: option });
   }
 
   render() {
@@ -61,7 +61,8 @@ class Demo extends React.Component {
             <input name="open-up" type="checkbox" onChange={this.onOpenUpCheck} /> Open Up
           </div>
 
-          <Dropdown className="dropdown"
+          <Dropdown
+            className="dropdown"
             options={OPTIONS} selectedOption={this.state.selectedOption.value}
             small={this.state.isSmall} disabled={this.state.isDisabled}
             openUp={this.state.isOpenUp} onSelectOption={this.onSelectOption}
@@ -74,4 +75,4 @@ class Demo extends React.Component {
   }
 }
 
-ReactDOM.render(<Demo />, document.getElementById("container"));
+ReactDOM.render(<Demo />, document.getElementById('container'));

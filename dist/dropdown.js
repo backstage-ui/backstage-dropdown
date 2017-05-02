@@ -59,16 +59,6 @@ var Dropdown = function (_Component) {
   }
 
   _createClass(Dropdown, [{
-    key: 'shouldComponentUpdate',
-    value: function shouldComponentUpdate(nextProps, nextState) {
-      if (nextState.dropdown !== this.state.dropdown) {
-        return true;
-      } else if (nextProps.selectedOption !== this.props.selectedOption || nextProps.options !== this.props.options || nextProps.disabled !== this.props.disabled || nextProps.small !== this.props.small || nextProps.className !== this.props.className) {
-        return true;
-      }
-      return false;
-    }
-  }, {
     key: 'componentWillUpdate',
     value: function componentWillUpdate(nextProps, nextState) {
       if (this.state.dropdown !== nextState.dropdown) {
@@ -193,7 +183,10 @@ exports.default = Dropdown;
 
 
 Dropdown.propTypes = {
-  options: _propTypes2.default.arrayOf(Object).isRequired,
+  options: _propTypes2.default.arrayOf(_propTypes2.default.shape({
+    label: _propTypes2.default.string,
+    value: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.number])
+  })).isRequired,
   selectedOption: _propTypes2.default.string.isRequired,
 
   className: _propTypes2.default.string,
