@@ -127,10 +127,10 @@ export default class Dropdown extends Component {
         onClick={() => this.props.disabled || this.state.dropdown || this.onClick()}
       >
         <div className="bs-ui-dropdown__item">
-          { selectedItem instanceof Object ? selectedItem.label : selectedItem }
+          { selectedItem.label }
         </div>
         <ul className="bs-ui-dropdown__list">
-          {this.renderOptions()}
+          { this.renderOptions() }
         </ul>
       </div>
     );
