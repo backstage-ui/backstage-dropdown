@@ -85,9 +85,8 @@ export default class Dropdown extends Component {
     const options = this.props.options.map(option => (
       <Option
         key={option.value}
-        value={option.value}
         label={option.label}
-        onSelect={this.onSelectItem}
+        onSelect={() => this.onSelectItem(option)}
         selected={this.props.selectedOption === option.value}
       />
     ));

@@ -33,24 +33,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Option = function (_PureComponent) {
   _inherits(Option, _PureComponent);
 
-  function Option(props) {
+  function Option() {
     _classCallCheck(this, Option);
 
-    var _this = _possibleConstructorReturn(this, (Option.__proto__ || Object.getPrototypeOf(Option)).call(this, props));
-
-    _this.onClick = _this.onClick.bind(_this);
-    return _this;
+    return _possibleConstructorReturn(this, (Option.__proto__ || Object.getPrototypeOf(Option)).apply(this, arguments));
   }
 
   _createClass(Option, [{
-    key: 'onClick',
-    value: function onClick() {
-      this.props.onSelect({
-        value: this.props.value,
-        label: this.props.label
-      });
-    }
-  }, {
     key: 'render',
     value: function render() {
       var optionClassNames = (0, _classnames2.default)({
@@ -60,7 +49,7 @@ var Option = function (_PureComponent) {
 
       return _react2.default.createElement(
         'li',
-        { className: optionClassNames, onClick: this.onClick },
+        { className: optionClassNames, onClick: this.props.onSelect },
         this.props.label
       );
     }
@@ -73,14 +62,12 @@ exports.default = Option;
 
 
 Option.propTypes = {
-  value: _propTypes2.default.string,
-  label: _propTypes2.default.string,
-  onSelect: _propTypes2.default.func,
+  label: _propTypes2.default.string.isRequired,
+  onSelect: _propTypes2.default.func.isRequired,
   selected: _propTypes2.default.bool
 };
 
 Option.defaultProps = {
-  value: '',
   label: '',
   onSelect: function onSelect() {},
   selected: false

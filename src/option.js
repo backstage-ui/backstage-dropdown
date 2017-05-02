@@ -10,19 +10,6 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 export default class Option extends PureComponent {
-  constructor(props) {
-    super(props);
-
-    this.onClick = ::this.onClick;
-  }
-
-  onClick() {
-    this.props.onSelect({
-      value: this.props.value,
-      label: this.props.label,
-    });
-  }
-
   render() {
     const optionClassNames = classNames({
       'bs-ui-dropdown__list-item': true,
@@ -30,7 +17,7 @@ export default class Option extends PureComponent {
     });
 
     return (
-      <li className={optionClassNames} onClick={this.onClick}>
+      <li className={optionClassNames} onClick={this.props.onSelect}>
         {this.props.label}
       </li>
     );
@@ -38,14 +25,12 @@ export default class Option extends PureComponent {
 }
 
 Option.propTypes = {
-  value: PropTypes.string,
-  label: PropTypes.string,
-  onSelect: PropTypes.func,
+  label: PropTypes.string.isRequired,
+  onSelect: PropTypes.func.isRequired,
   selected: PropTypes.bool,
 };
 
 Option.defaultProps = {
-  value: '',
   label: '',
   onSelect: () => {},
   selected: false,

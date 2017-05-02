@@ -130,9 +130,10 @@ var Dropdown = function (_Component) {
       var options = this.props.options.map(function (option) {
         return _react2.default.createElement(_option2.default, {
           key: option.value,
-          value: option.value,
           label: option.label,
-          onSelect: _this2.onSelectItem,
+          onSelect: function onSelect() {
+            return _this2.onSelectItem(option);
+          },
           selected: _this2.props.selectedOption === option.value
         });
       });

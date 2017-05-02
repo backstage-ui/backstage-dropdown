@@ -14,29 +14,21 @@ describe('Option', function () {
     expect(wrapper.prop('className')).toContain('bs-ui-dropdown__list-item--selected');
   });
 
-  it('should call onSelect with expect data', function (done) {
-    const data = {
-      label: 'Teste',
-      value: 'teste',
-    };
-
-    const onSelect = function (responseData) {
-      expect(responseData).toEqual(data);
-      done();
-    };
-
+  it('should call onSelect with expect data', function () {
+    const onSelect = jest.fn();
     const wrapper = shallow(<Option
-      label={data.label} value={data.value}
-      onSelect={selectedData => onSelect(selectedData)}
+      label="Test 2"
+      onSelect={onSelect}
     />);
     wrapper.simulate('click');
+    expect(onSelect).toBeCalled();
   });
 
   describe('should component update', function () {
     class FakeComponent extends Component {
       render() {
         return (
-          <Option selected={this.props.selected} value="maca" label="Maca" />
+          <Option selected={this.props.selected} label="Maca" />
         );
       }
     }
