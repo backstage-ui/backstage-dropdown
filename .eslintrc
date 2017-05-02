@@ -10,6 +10,8 @@
     "react/no-find-dom-node": 0,
     "react/jsx-filename-extension": 0,
     "react/prefer-es6-class": 0,
-    "react/prefer-stateless-function": 0
+    "react/prefer-stateless-function": 0,
+    "prefer-arrow-callback": 0,
+    "jsx-a11y/no-static-element-interactions": 0
   }
 }
