@@ -4,10 +4,10 @@
  * License: MIT
  */
 
-import React, { Component, PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 
 import PropTypes from 'prop-types';
-import classNames from "classnames";
+import classNames from 'classnames';
 
 export default class Option extends PureComponent {
   constructor(props) {
@@ -19,14 +19,14 @@ export default class Option extends PureComponent {
   onClick() {
     this.props.onSelect({
       value: this.props.value,
-      label: this.props.label
+      label: this.props.label,
     });
   }
 
   render() {
     const optionClassNames = classNames({
-      "bs-ui-dropdown__list-item": true,
-      "bs-ui-dropdown__list-item--selected": this.props.selected
+      'bs-ui-dropdown__list-item': true,
+      'bs-ui-dropdown__list-item--selected': this.props.selected,
     });
 
     return (
@@ -45,8 +45,8 @@ Option.propTypes = {
 };
 
 Option.defaultProps = {
-  value: "",
-  label: "",
+  value: '',
+  label: '',
   onSelect: () => {},
   selected: false,
 };

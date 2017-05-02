@@ -1,5 +1,7 @@
-/* global describe, it, expect */
-import React, { Component } from 'react';
+/* global describe, it, expect, beforeEach, afterEach, jest */
+/* eslint func-names: ["off"] */
+
+import React from 'react';
 
 import sinon from 'sinon';
 import { shallow, mount } from 'enzyme';
@@ -7,35 +9,35 @@ import { shallow, mount } from 'enzyme';
 import Dropdown from '../dropdown';
 import Option from '../option';
 
-describe('Dropdown', function () {
+describe('Dropdown', () => {
   let callbacks;
 
   const options = [
-    {label: "Label Teste", value: "teste"},
-    {label: "Label Teste 2", value: "teste 2"},
-    {label: "Label Teste 3", value: "teste 3"}
+    { label: 'Label Teste', value: 'teste' },
+    { label: 'Label Teste 2', value: 'teste 2' },
+    { label: 'Label Teste 3', value: 'teste 3' },
   ];
 
   const defaultProps = {
-    options: options,
-    selectedOption: options[0].value
-  }
+    options,
+    selectedOption: options[0].value,
+  };
 
-  beforeEach(function () {
+  beforeEach(() => {
     callbacks = [];
   });
 
-  afterEach(function () {
-    callbacks.forEach(function (callback, index, array) {
+  afterEach(() => {
+    callbacks.forEach((callback) => {
       callback();
     });
   });
 
   const dispatchEvent = function (eventName, el) {
-    let evt = document.createEvent('Event');
+    const evt = document.createEvent('Event');
     evt.initEvent(eventName, true, true);
     el.dispatchEvent(evt);
-  }
+  };
 
   it('should accept className', function () {
     const wrapper = shallow(<Dropdown {...defaultProps} className="foobar" />);
@@ -52,7 +54,7 @@ describe('Dropdown', function () {
 
   it('should have selectedOption props as selected', function () {
     const wrapper = shallow(<Dropdown options={options} selectedOption={options[1].value} />);
-    expect(wrapper.find(".bs-ui-dropdown__item").text()).toBe(options[1].label);
+    expect(wrapper.find('.bs-ui-dropdown__item').text()).toBe(options[1].label);
   });
 
   it('should pass selected to the selected Option', function () {
@@ -158,7 +160,7 @@ describe('Dropdown', function () {
 
   describe('component update', function () {
     beforeEach(function () {
-      this.renderStub = sinon.stub(Dropdown.prototype, "render").returns(null);
+      this.renderStub = sinon.stub(Dropdown.prototype, 'render').returns(null);
       this.wrapper = mount(<Dropdown {...defaultProps} />);
     });
 
@@ -168,14 +170,14 @@ describe('Dropdown', function () {
 
     describe('should not rerender', function () {
       it('if props and state not change', function () {
-        this.wrapper.update()
+        this.wrapper.update();
         expect(this.renderStub.calledTwice).toBe(false);
       });
 
       it('if openUp props change', function () {
         this.wrapper.setProps({
           ...this.wrapper.props,
-          openUp: true
+          openUp: true,
         });
         expect(this.renderStub.calledTwice).toBe(false);
       });
@@ -183,7 +185,7 @@ describe('Dropdown', function () {
       it('if onOpen props change', function () {
         this.wrapper.setProps({
           ...this.wrapper.props,
-          onOpen: function () {}
+          onOpen: () => {},
         });
         expect(this.renderStub.calledTwice).toBe(false);
       });
@@ -191,7 +193,7 @@ describe('Dropdown', function () {
       it('if onClose props change', function () {
         this.wrapper.setProps({
           ...this.wrapper.props,
-          onClose: function () {}
+          onClose: () => {},
         });
         expect(this.renderStub.calledTwice).toBe(false);
       });
@@ -199,7 +201,7 @@ describe('Dropdown', function () {
       it('if onSelectOption props change', function () {
         this.wrapper.setProps({
           ...this.wrapper.props,
-          onSelectOption: function () {}
+          onSelectOption: () => {},
         });
         expect(this.renderStub.calledTwice).toBe(false);
       });
@@ -209,7 +211,7 @@ describe('Dropdown', function () {
       it('if options change', function () {
         this.wrapper.setProps({
           ...this.wrapper.props,
-          options: [...options, {value: 'melao', label: 'Melao'}]
+          options: [...options, { value: 'melao', label: 'Melao' }],
         });
         expect(this.renderStub.calledTwice).toBe(true);
       });
@@ -217,7 +219,7 @@ describe('Dropdown', function () {
       it('if dropdown state change', function () {
         this.wrapper.setState({
           ...this.wrapper.state,
-          dropdown: true
+          dropdown: true,
         });
         expect(this.renderStub.calledTwice).toBe(true);
       });
@@ -225,7 +227,7 @@ describe('Dropdown', function () {
       it('if small props change', function () {
         this.wrapper.setProps({
           ...this.wrapper.props,
-          small: true
+          small: true,
         });
         expect(this.renderStub.calledTwice).toBe(true);
       });
@@ -233,7 +235,7 @@ describe('Dropdown', function () {
       it('if disabled props change', function () {
         this.wrapper.setProps({
           ...this.wrapper.props,
-          disabled: true
+          disabled: true,
         });
         expect(this.renderStub.calledTwice).toBe(true);
       });
@@ -241,7 +243,7 @@ describe('Dropdown', function () {
       it('if className props change', function () {
         this.wrapper.setProps({
           ...this.wrapper.props,
-          className: 'testClass'
+          className: 'testClass',
         });
         expect(this.renderStub.calledTwice).toBe(true);
       });
@@ -249,7 +251,7 @@ describe('Dropdown', function () {
       it('if selectedOption props change', function () {
         this.wrapper.setProps({
           ...this.wrapper.state,
-          selectedOption: options[1].value
+          selectedOption: options[1].value,
         });
         expect(this.renderStub.calledTwice).toBe(true);
       });

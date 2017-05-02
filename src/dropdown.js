@@ -8,15 +8,15 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
 import PropTypes from 'prop-types';
-import classNames from "classnames";
-import Option from "./option";
+import classNames from 'classnames';
+import Option from './option';
 
 export default class Dropdown extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      dropdown: false
+      dropdown: false,
     };
 
     this.onClick = ::this.onClick;
@@ -39,10 +39,6 @@ export default class Dropdown extends Component {
     return false;
   }
 
-  componentWillUnmount() {
-    this.unbindDocumentClick();
-  }
-
   componentWillUpdate(nextProps, nextState) {
     if (this.state.dropdown !== nextState.dropdown) {
       if (nextState.dropdown) {
@@ -53,6 +49,10 @@ export default class Dropdown extends Component {
     }
   }
 
+  componentWillUnmount() {
+    this.unbindDocumentClick();
+  }
+
   onClick() {
     const dropdown = this.state.dropdown;
     this.setState({ dropdown: !dropdown });
@@ -61,7 +61,7 @@ export default class Dropdown extends Component {
   onSelectItem(selectedItem) {
     this.setState({
       ...this.state,
-      dropdown: false
+      dropdown: false,
     });
     this.props.onSelectOption(selectedItem);
   }
@@ -91,26 +91,28 @@ export default class Dropdown extends Component {
       this.props.onClose();
       this.setState({
         ...this.state,
-        dropdown: false
+        dropdown: false,
       });
     }
   }
 
   renderOptions() {
-    const options = this.props.options.map((option) => {
+    const options = this.props.options.map((optionData) => {
+      let option = optionData;
       if (typeof option !== 'object') {
         option = {
           value: option,
-          label: option
+          label: option,
         };
       }
 
       return (
-        <Option key={option.value}
+        <Option
+          key={option.value}
           value={option.value}
           label={option.label}
           onSelect={this.onSelectItem}
-          selected={ this.props.selectedOption === option.value }
+          selected={this.props.selectedOption === option.value}
         />
       );
     });
@@ -119,17 +121,24 @@ export default class Dropdown extends Component {
 
   render() {
     const dropdownClassNames = classNames({
-      "bs-ui-dropdown": true,
-      "bs-ui-dropdown--open": this.state.dropdown,
-      "bs-ui-dropdown--small": this.props.small,
-      "bs-ui-dropdown--open-up": this.props.openUp,
-      "bs-ui-dropdown--disabled": this.props.disabled,
+      'bs-ui-dropdown': true,
+      'bs-ui-dropdown--open': this.state.dropdown,
+      'bs-ui-dropdown--small': this.props.small,
+      'bs-ui-dropdown--open-up': this.props.openUp,
+      'bs-ui-dropdown--disabled': this.props.disabled,
     }, this.props.className);
-    const selectedItem = this.props.options.find((option) => option.value === this.props.selectedOption);
+    const selectedItem = this.props.options.find(
+      option => option.value === this.props.selectedOption,
+    );
 
     return (
-      <div className={dropdownClassNames} onClick={() => this.props.disabled || this.state.dropdown || this.onClick() }>
-        <div className="bs-ui-dropdown__item">{ selectedItem instanceof Object ? selectedItem.label : selectedItem }</div>
+      <div
+        className={dropdownClassNames}
+        onClick={() => this.props.disabled || this.state.dropdown || this.onClick()}
+      >
+        <div className="bs-ui-dropdown__item">
+          { selectedItem instanceof Object ? selectedItem.label : selectedItem }
+        </div>
         <ul className="bs-ui-dropdown__list">
           {this.renderOptions()}
         </ul>
@@ -139,7 +148,7 @@ export default class Dropdown extends Component {
 }
 
 Dropdown.propTypes = {
-  options: PropTypes.array.isRequired,
+  options: PropTypes.arrayOf(Object).isRequired,
   selectedOption: PropTypes.string.isRequired,
 
   className: PropTypes.string,
@@ -152,7 +161,7 @@ Dropdown.propTypes = {
 };
 
 Dropdown.defaultProps = {
-  className: "",
+  className: '',
   disabled: false,
   small: false,
   openUp: false,

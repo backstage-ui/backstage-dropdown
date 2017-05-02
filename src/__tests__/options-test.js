@@ -1,4 +1,6 @@
-/* global describe, it, expect */
+/* global describe, it, expect, beforeEach, afterEach, jest */
+/* eslint func-names: ["off"], react/prop-types: ["off"] */
+
 import React, { Component } from 'react';
 
 import { shallow, mount } from 'enzyme';
@@ -8,36 +10,39 @@ import Option from '../option';
 
 describe('Option', function () {
   it('selected should contain expected className', function () {
-    const wrapper = shallow(<Option selected={true} />);
+    const wrapper = shallow(<Option selected />);
     expect(wrapper.prop('className')).toContain('bs-ui-dropdown__list-item--selected');
   });
 
   it('should call onSelect with expect data', function (done) {
     const data = {
       label: 'Teste',
-      value: 'teste'
+      value: 'teste',
     };
 
     const onSelect = function (responseData) {
       expect(responseData).toEqual(data);
       done();
-    }
+    };
 
-    const wrapper = shallow(<Option label={data.label} value={data.value} onSelect={(data) => onSelect(data)} />);
+    const wrapper = shallow(<Option
+      label={data.label} value={data.value}
+      onSelect={selectedData => onSelect(selectedData)}
+    />);
     wrapper.simulate('click');
   });
 
   describe('should component update', function () {
-    class FakeComponent extends Component  {
+    class FakeComponent extends Component {
       render() {
         return (
-          <Option selected={this.props.selected} value='maca' label='Maca' />
+          <Option selected={this.props.selected} value="maca" label="Maca" />
         );
       }
     }
 
     beforeEach(function () {
-      this.renderStub = sinon.stub(Option.prototype, "render").returns(null);
+      this.renderStub = sinon.stub(Option.prototype, 'render').returns(null);
       this.wrapper = mount(<FakeComponent selected={false} />);
     });
 
@@ -46,14 +51,14 @@ describe('Option', function () {
     });
 
     it('should not rerender if props and state not change', function () {
-      this.wrapper.setProps({selected: false});
+      this.wrapper.setProps({ selected: false });
       this.wrapper.update();
 
       expect(this.renderStub.calledTwice).not.toBeTruthy();
     });
 
     it('should rerender if props and state change', function () {
-      this.wrapper.setProps({selected: true});
+      this.wrapper.setProps({ selected: true });
       this.wrapper.update();
 
       expect(this.renderStub.calledTwice).toBeTruthy();
