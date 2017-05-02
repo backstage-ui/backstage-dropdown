@@ -24,21 +24,6 @@ export default class Dropdown extends Component {
     this.handleDocumentClick = ::this.handleDocumentClick;
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    if (nextState.dropdown !== this.state.dropdown) {
-      return true;
-    } else if (
-      nextProps.selectedOption !== this.props.selectedOption ||
-      nextProps.options !== this.props.options ||
-      nextProps.disabled !== this.props.disabled ||
-      nextProps.small !== this.props.small ||
-      nextProps.className !== this.props.className
-    ) {
-      return true;
-    }
-    return false;
-  }
-
   componentWillUpdate(nextProps, nextState) {
     if (this.state.dropdown !== nextState.dropdown) {
       if (nextState.dropdown) {

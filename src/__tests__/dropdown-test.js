@@ -158,45 +158,6 @@ describe('Dropdown', () => {
       this.renderStub.restore();
     });
 
-    describe('should not rerender', function () {
-      it('if props and state not change', function () {
-        this.wrapper.update();
-        expect(this.renderStub.calledTwice).toBe(false);
-      });
-
-      it('if openUp props change', function () {
-        this.wrapper.setProps({
-          ...this.wrapper.props,
-          openUp: true,
-        });
-        expect(this.renderStub.calledTwice).toBe(false);
-      });
-
-      it('if onOpen props change', function () {
-        this.wrapper.setProps({
-          ...this.wrapper.props,
-          onOpen: () => {},
-        });
-        expect(this.renderStub.calledTwice).toBe(false);
-      });
-
-      it('if onClose props change', function () {
-        this.wrapper.setProps({
-          ...this.wrapper.props,
-          onClose: () => {},
-        });
-        expect(this.renderStub.calledTwice).toBe(false);
-      });
-
-      it('if onSelectOption props change', function () {
-        this.wrapper.setProps({
-          ...this.wrapper.props,
-          onSelectOption: () => {},
-        });
-        expect(this.renderStub.calledTwice).toBe(false);
-      });
-    });
-
     describe('should rerender', function () {
       it('if options change', function () {
         this.wrapper.setProps({
