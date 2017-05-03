@@ -1,14 +1,14 @@
 {
   "name": "backstage-dropdown",
-  "version": "0.2.1",
+  "version": "1.0.0",
   "description": "backstage dropdown",
   "main": "dist/dropdown.js",
   "scripts": {
     "start": "webpack-dev-server",
-    "build": "babel src/ --out-dir dist/ --ignore __tests__,__mocks__",
+    "build": "yarn lint && babel src/ --out-dir dist/ --ignore __tests__,__mocks__",
     "lint": "eslint src",
-    "test": "jest test",
-    "test:watch": "jest test --watch"
+    "test": "jest test --verbose",
+    "test:watch": "jest test --watch --verbose"
   },
   "files": [
     "dist"
@@ -33,23 +33,25 @@
     "babel-preset-react": "^6.11.1",
     "babel-preset-stage-0": "^6.16.0",
     "enzyme": "^2.4.1",
-    "eslint": "^3.4.0",
-    "eslint-config-airbnb": "^10.0.1",
-    "eslint-plugin-import": "^1.14.0",
-    "eslint-plugin-jsx-a11y": "^2.2.1",
-    "eslint-plugin-react": "^6.2.0",
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb": "^14.1.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^4.0.0",
+    "eslint-plugin-react": "^6.10.3",
     "jest": "^15.1.1",
     "jest-cli": "^15.1.1",
     "react": "^15.3.1",
     "react-addons-test-utils": "^15.3.1",
     "react-dom": "^15.3.1",
+    "react-test-renderer": "^15.5.4",
+    "sinon": "^2.1.0",
     "webpack": "^1.13.2",
     "webpack-dev-server": "^1.16.1"
   },
-  "jest": {
-    "automock": false
-  },
   "dependencies": {
+    "backstage-ui-styles": "^0.0.6",
+    "classnames": "^2.2.5",
+    "prop-types": "^15.5.8",
     "react-portal": "^3.0.0"
   }
 }

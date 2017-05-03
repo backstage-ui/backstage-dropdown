@@ -4,65 +4,34 @@
  * License: MIT
  */
 
-import React, { Component } from 'react';
-import styles from './dropdown.css';
+import React, { PureComponent } from 'react';
 
-export default class Option extends Component {
-  constructor(props) {
-    super(props);
+import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
-    this.state = { hover: false };
-    this.mouseOver = this.mouseOver.bind(this);
-    this.mouseOut = this.mouseOut.bind(this);
-    this.onClick = this.onClick.bind(this);
-  }
-
-  onClick() {
-    this.props.onChange(this.props.value);
-  }
-
-  mouseOver() {
-    this.setState({ hover: true });
-  }
-
-  mouseOut() {
-    this.setState({ hover: false });
-  }
-
+export default class Option extends PureComponent {
   render() {
-    let optionStyle = styles.option;
-
-    if (this.state.hover) {
-      optionStyle = Object.assign({}, optionStyle, styles.optionHover);
-    }
-
-    if (this.props.selected && !this.state.hover) {
-      optionStyle = Object.assign({}, optionStyle, styles.optionSelected);
-    }
+    const optionClassNames = classNames({
+      'bs-ui-dropdown__list-item': true,
+      'bs-ui-dropdown__list-item--selected': this.props.selected,
+    });
 
     return (
-      <div
-        value={this.props.value}
-        className="dropdown-option"
-        onClick={this.onClick}
-        onMouseOver={this.mouseOver}
-        onMouseOut={this.mouseOut}
-        style={optionStyle}
-      >
-        {this.props.value}
-      </div>
+      <li className={optionClassNames} onClick={this.props.onSelect}>
+        {this.props.label}
+      </li>
     );
   }
 }
 
 Option.propTypes = {
-  value: React.PropTypes.string,
-  onChange: React.PropTypes.func,
-  selected: React.PropTypes.bool,
+  label: PropTypes.string.isRequired,
+  onSelect: PropTypes.func.isRequired,
+  selected: PropTypes.bool,
 };
 
 Option.defaultProps = {
-  value: '',
-  onChange: () => {},
+  label: '',
+  onSelect: () => {},
   selected: false,
 };

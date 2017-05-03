@@ -10,9 +10,13 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _dropdown = require('./dropdown.css');
+var _propTypes = require('prop-types');
 
-var _dropdown2 = _interopRequireDefault(_dropdown);
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _classnames = require('classnames');
+
+var _classnames2 = _interopRequireDefault(_classnames);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -26,78 +30,45 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 * License: MIT
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 */
 
-var Option = function (_Component) {
-  _inherits(Option, _Component);
+var Option = function (_PureComponent) {
+  _inherits(Option, _PureComponent);
 
-  function Option(props) {
+  function Option() {
     _classCallCheck(this, Option);
 
-    var _this = _possibleConstructorReturn(this, (Option.__proto__ || Object.getPrototypeOf(Option)).call(this, props));
-
-    _this.state = { hover: false };
-    _this.mouseOver = _this.mouseOver.bind(_this);
-    _this.mouseOut = _this.mouseOut.bind(_this);
-    _this.onClick = _this.onClick.bind(_this);
-    return _this;
+    return _possibleConstructorReturn(this, (Option.__proto__ || Object.getPrototypeOf(Option)).apply(this, arguments));
   }
 
   _createClass(Option, [{
-    key: 'onClick',
-    value: function onClick() {
-      this.props.onChange(this.props.value);
-    }
-  }, {
-    key: 'mouseOver',
-    value: function mouseOver() {
-      this.setState({ hover: true });
-    }
-  }, {
-    key: 'mouseOut',
-    value: function mouseOut() {
-      this.setState({ hover: false });
-    }
-  }, {
     key: 'render',
     value: function render() {
-      var optionStyle = _dropdown2.default.option;
-
-      if (this.state.hover) {
-        optionStyle = Object.assign({}, optionStyle, _dropdown2.default.optionHover);
-      }
-
-      if (this.props.selected && !this.state.hover) {
-        optionStyle = Object.assign({}, optionStyle, _dropdown2.default.optionSelected);
-      }
+      var optionClassNames = (0, _classnames2.default)({
+        'bs-ui-dropdown__list-item': true,
+        'bs-ui-dropdown__list-item--selected': this.props.selected
+      });
 
       return _react2.default.createElement(
-        'div',
-        {
-          value: this.props.value,
-          className: 'dropdown-option',
-          onClick: this.onClick,
-          onMouseOver: this.mouseOver,
-          onMouseOut: this.mouseOut,
-          style: optionStyle
-        },
-        this.props.value
+        'li',
+        { className: optionClassNames, onClick: this.props.onSelect },
+        this.props.label
       );
     }
   }]);
 
   return Option;
-}(_react.Component);
+}(_react.PureComponent);
 
 exports.default = Option;
 
 
 Option.propTypes = {
-  value: _react2.default.PropTypes.string,
-  onChange: _react2.default.PropTypes.func,
-  selected: _react2.default.PropTypes.bool
+  label: _propTypes2.default.string.isRequired,
+  onSelect: _propTypes2.default.func.isRequired,
+  selected: _propTypes2.default.bool
 };
 
 Option.defaultProps = {
-  value: '',
-  onChange: function onChange() {},
+  label: '',
+  onSelect: function onSelect() {},
   selected: false
 };
