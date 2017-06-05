@@ -12,8 +12,8 @@ import classNames from 'classnames';
 export default class Option extends PureComponent {
   render() {
     const optionClassNames = classNames({
-      'bs-ui-dropdown__list-item': true,
-      'bs-ui-dropdown__list-item--selected': this.props.selected,
+      'bs-ui-options__list-item': true,
+      'bs-ui-options__list-item--selected': this.props.selected,
     });
 
     return (

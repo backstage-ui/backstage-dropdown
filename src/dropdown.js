@@ -96,10 +96,10 @@ export default class Dropdown extends Component {
   render() {
     const dropdownClassNames = classNames({
       'bs-ui-dropdown': true,
-      'bs-ui-dropdown--open': this.state.dropdown,
       'bs-ui-dropdown--small': this.props.small,
-      'bs-ui-dropdown--open-up': this.props.openUp,
       'bs-ui-dropdown--disabled': this.props.disabled,
+      'bs-ui-options--open': this.state.dropdown,
+      'bs-ui-options--open-up': this.props.openUp,
     }, this.props.className);
     const selectedItem = this.props.options.find(
       option => option.value === this.props.selectedOption,
@@ -113,7 +113,7 @@ export default class Dropdown extends Component {
         <div className="bs-ui-dropdown__item">
           { selectedItem.label }
         </div>
-        <ul className="bs-ui-dropdown__list">
+        <ul className="bs-ui-options__list">
           { this.renderOptions() }
         </ul>
       </div>
