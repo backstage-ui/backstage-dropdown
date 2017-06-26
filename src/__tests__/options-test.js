@@ -11,7 +11,7 @@ import Option from '../option';
 describe('Option', function () {
   it('selected should contain expected className', function () {
     const wrapper = shallow(<Option selected />);
-    expect(wrapper.prop('className')).toContain('bs-ui-dropdown__list-item--selected');
+    expect(wrapper.prop('className')).toContain('bs-ui-options__item bs-ui-options__item--selected');
   });
 
   it('should call onSelect with expect data', function () {

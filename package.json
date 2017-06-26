@@ -49,7 +49,7 @@
     "webpack-dev-server": "^1.16.1"
   },
   "dependencies": {
-    "backstage-ui-styles": "^0.0.6",
+    "backstage-ui-styles": "^0.0.14",
     "classnames": "^2.2.5",
     "prop-types": "^15.5.8",
     "react-portal": "^3.0.0"

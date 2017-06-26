@@ -71,20 +71,25 @@ describe('Dropdown', () => {
     });
 
     it('should open dropdown', function () {
-      expect(this.wrapper.hasClass('bs-ui-dropdown--open')).toBe(false);
+      const optionsList = this.wrapper.find('.bs-ui-options');
+      expect(optionsList.hasClass('bs-ui-dropdown__options--open')).toBe(false);
 
       this.wrapper.simulate('click');
-      expect(this.wrapper.update().hasClass('bs-ui-dropdown--open')).toBe(true);
+      this.wrapper.update();
+      expect(optionsList.hasClass('bs-ui-dropdown__options--open')).toBe(true);
     });
 
     it('out should close dropdown', function (done) {
-      expect(this.wrapper.hasClass('bs-ui-dropdown--open')).toBe(false);
+      const optionsList = this.wrapper.find('.bs-ui-options');
+      expect(this.wrapper.hasClass('bs-ui-dropdown__options--open')).toBe(false);
 
       this.wrapper.simulate('click');
-      expect(this.wrapper.update().hasClass('bs-ui-dropdown--open')).toBe(true);
+      this.wrapper.update();
+      expect(optionsList.hasClass('bs-ui-dropdown__options--open')).toBe(true);
 
       const expectCallback = () => {
-        expect(this.wrapper.update().hasClass('bs-ui-dropdown--open')).toBe(false);
+        this.wrapper.update();
+        expect(optionsList.hasClass('bs-ui-dropdown__options--open')).toBe(false);
         done();
       };
 
@@ -114,7 +119,7 @@ describe('Dropdown', () => {
 
       const option = wrapper.find(Option).first();
       option.simulate('click');
-      expect(wrapper.update().hasClass('bs-ui-dropdown--open')).toBe(false);
+      expect(wrapper.update().hasClass('bs-ui-dropdown__options--open')).toBe(false);
     });
 
     it('should call onSelectOption callback whenever a option has been selected', function () {
