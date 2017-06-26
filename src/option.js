@@ -12,14 +12,14 @@ import classNames from 'classnames';
 export default class Option extends PureComponent {
   render() {
     const optionClassNames = classNames({
-      'bs-ui-dropdown__list-item': true,
-      'bs-ui-dropdown__list-item--selected': this.props.selected,
+      'bs-ui-options__item': true,
+      'bs-ui-options__item--selected': this.props.selected,
     });
 
     return (
-      <li className={optionClassNames} onClick={this.props.onSelect}>
+      <div className={optionClassNames} onClick={this.props.onSelect}>
         {this.props.label}
-      </li>
+      </div>
     );
   }
 }
