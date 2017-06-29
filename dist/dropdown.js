@@ -30,6 +30,8 @@ var _option2 = _interopRequireDefault(_option);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -146,11 +148,16 @@ var Dropdown = function (_Component) {
 
       var dropdownClassNames = (0, _classnames2.default)({
         'bs-ui-dropdown': true,
-        'bs-ui-dropdown--open': this.state.dropdown,
         'bs-ui-dropdown--small': this.props.small,
-        'bs-ui-dropdown--open-up': this.props.openUp,
         'bs-ui-dropdown--disabled': this.props.disabled
       }, this.props.className);
+      var optionsOpen = this.props.openUp ? 'bs-ui-dropdown__options--open-up' : 'bs-ui-dropdown__options--open';
+      var optionsClassNames = (0, _classnames2.default)(_defineProperty({
+        'bs-ui-options': true,
+        'bs-ui-dropdown__options': true,
+        'bs-ui-dropdown__options--small': this.props.small
+      }, optionsOpen, this.state.dropdown));
+
       var selectedItem = this.props.options.find(function (option) {
         return option.value === _this3.props.selectedOption;
       });
@@ -169,9 +176,13 @@ var Dropdown = function (_Component) {
           selectedItem.label
         ),
         _react2.default.createElement(
-          'ul',
-          { className: 'bs-ui-dropdown__list' },
-          this.renderOptions()
+          'div',
+          { className: optionsClassNames },
+          _react2.default.createElement(
+            'div',
+            { className: 'bs-ui-options__list' },
+            this.renderOptions()
+          )
         )
       );
     }
